@@ -42,7 +42,7 @@
 													<?php }elseif($penjualan->status == '1'){ ?>
 														<button type="button" name="status" class="btn btn-warning">CHECKOUT</button>
 													<?php } elseif($penjualan->status == '2'){ ?>
-														<button type="button" name="status" class="btn btn-success">TERKIRIM</button>
+														<button type="button" name="status" class="btn btn-success">SUDAH DIBAYAR</button>
 													<?php } ?>
 												</td>
 												<td style="text-align:center"><?php echo $penjualan->resi ?></td>

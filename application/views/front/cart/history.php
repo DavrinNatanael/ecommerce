@@ -30,7 +30,7 @@
                 </tr>
               </thead>
               <tbody>
-              <?php $no=1; foreach ($cart_history as $history){ ?>
+              <?php $no=1; foreach (array_reverse($cart_history) as $history){ ?>
                 <tr>
                   <td style="text-align:center"><?php echo $no++ ?></td>
                   <td style="text-align:center"><?php echo $history->id_trans ?></a></td>
@@ -38,10 +38,12 @@
                   <td style="text-align:center"><?php echo strtoupper($history->kurir).' '.$history->service ?></td>
 									<td style="text-align:center">
 		                <?php if($history->status == '1'){ ?>
-		                  <button type="button" name="status" class="btn btn-sm btn-primary">BELUM DIKIRIM</button>
+		                  <button type="button" name="status" class="btn btn-sm btn-primary">BELUM DIBAYAR</button>
 		                <?php } elseif($history->status == '2'){ ?>
-		                  <button type="button" name="status" class="btn btn-sm btn-success">TERKIRIM</button>
-		                <?php } ?>
+		                  <button type="button" name="status" class="btn btn-sm btn-success">SUDAH DIBAYAR</button>
+		                <?php } elseif($history->status == '3'){ ?>
+											<button type="button" name="status" class="btn btn-sm btn-success">SUDAH DIKIRIM</button>
+										<?php } ?>
 									</td>
 									<td style="text-align:center">
 										<?php if($history->resi != NULL){echo $history->resi;}else{echo "Belum ada";} ?>

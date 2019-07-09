@@ -12,8 +12,58 @@
 				</nav>
 	    </div>
 
+
 	    <div class="col-lg-12"><h1>Detail Riwayat Transaksi</h1><hr>
         <h4>Invoice NO. <?php echo $history_detail_row->id_trans ?></h4>
+				<?php if($history_detail_row->status=='2'){ ?>
+					<?php echo form_open('cart/download_invoice/'.$history_detail_row->id_trans) ?>
+						<button type="submit" name="download_invoice" class="btn btn-sm btn-success">Download Bukti pembayaran</button>
+					<?php echo form_close() ?>
+					<br>
+		    <?php } else {?>
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+						  Pilih metode pembayaran
+						</button>
+						<br>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Pilih metode pembayaran</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+										<table class="table table-borderless">
+											<tbody>
+												<tr>
+													<th scope="row">
+														<form action="<?php echo base_url('page/bayarcc/').$history_detail_row->id_trans ?>" method="post">
+															<input type="hidden" name="idtrans" value="<?php echo $history_detail_row->id_trans ?>">
+															<input type="hidden" name="code" value="2">
+															<input type="hidden" name="itemName" value="<?php echo $history_detail_row->judul_produk ?>">
+															<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo ceil(berat($history_detail_row->total_berat)) * $history_detail_row->ongkir + $subtotal_history->subtotal ?>">
+															<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" type="submit"><h5><b><i class="fa fa-credit-card"></i> Kartu Kredit / Debit</b></h5></button>
+														</form>
+													</th>
+												</tr>
+												<tr>
+													<th scope="row">
+														<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" onclick="window.location.href='<?php echo base_url('page/konfirmasi_pembayaran')?>'"><h5><b><i class="fa fa-bank"></i> Transfer bank</b></h5></button>
+													</th>
+												</tr>
+											</tbody>
+										</table>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<br>
+						<div class="alert alert-success alert"><i class="fa fa-bullhorn"></i> Segera lakukan pembayaran sebelum <b><?php $d=strtotime("tomorrow"); echo date("Y/m/d h:i:sa",$d);?></b>. Jika pesanan anda sudah melewati batas yang telah ditentukan, akan secara otomatis dibatalkan oleh sistem.</div>
+					</div>
+				<?php } ?>
 				<div class="row">
 				  <div class="col-lg-12">
 	          <div class="box-body table-responsive padding">
@@ -28,6 +78,7 @@
 										<th style="text-align: center">Qty</th>
                     <th style="text-align: center">Total</th>
 										<th style="text-align: center">Catatan</th>
+										<th style="text-align: center">Status pesanan</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -41,6 +92,15 @@
                     <td style="text-align:center"><?php echo $history->total_qty ?></td>
                     <td style="text-align:center"><?php echo $history->subtotal ?></td>
 										<td style="text-align:center"><?php echo $history->catatan ?></td>
+										<td style="text-align:center">
+											<?php if($history->status == '1'){ ?>
+			                  <span class="text-danger">BELUM DIBAYAR</span>
+			                <?php } elseif($history->status == '2'){ ?>
+			                  <span class="text-success">SUDAH DIBAYAR</span>
+			                <?php } elseif($history->status == '3'){ ?>
+												<span class="text-success">SUDAH DIKIRIM</span>
+											<?php } ?>
+										</td>
                   </tr>
                 <?php } ?>
                 </tbody>

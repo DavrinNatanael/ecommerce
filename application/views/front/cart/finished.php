@@ -7,17 +7,63 @@
 			<nav aria-label="breadcrumb">
 			  <ol class="breadcrumb">
 			    <li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="fa fa-home"></i> Home</a></li>
-					<li class="breadcrumb-item active">Transaksi Selesai</li>
+					<li class="breadcrumb-item active">Checkout</li>
 			  </ol>
 			</nav>
     </div>
 
-    <div class="col-lg-12"><h1>Transaksi Selesai</h1><hr>
-			<h4>INVOICE NO. <?php echo $customer_data->id_trans ?></h4>
-			<?php echo form_open('cart/download_invoice/'.$customer_data->id_trans) ?>
-				<button type="submit" name="download_invoice" class="btn btn-sm btn-success">Download Invoice</button>
-			<?php echo form_close() ?>
+    <div class="col-lg-12"><h1>Checkout berhasil</h1><hr>
+			<?php $no=1; foreach ($cart_finished as $cart	){ ?>
+					<input type="hidden" value="<?php echo $no++ ?>">
+					<input type="hidden" value="<?php echo number_format($cart->harga_diskon) ?>">
+					<input type="hidden" value="<?php echo $cart->berat ?>">
+					<input type="hidden" name="itemName" value="<?php echo $cart->judul_produk ?>">
+					<input type="hidden" name="produk_id" value="<?php echo $cart->produk_id ?>">
+					<input type="hidden" id="qty2" type="number" name="qty" class="form-control" style="width:50px;" name="produk_id" value="<?php echo $cart->total_qty ?>" min="1" max="9">
+					<input type="hidden" id="tmp" type="number" class="form-control" style="width:50px;" value="<?php echo $cart->total_qty ?>" min="1" max="9">
+					<input type="hidden" id="berathi2" value="<?php echo $cart->total_berat ?>">
+			<?php } ?>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			  Pilih metode pembayaran
+			</button>
 			<br>
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Pilih metode pembayaran</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+							<table class="table table-borderless">
+								<tbody>
+									<tr>
+										<th scope="row">
+											<form action="<?php echo base_url('page/bayarcc/').$customer_data->id_trans ?>" method="post">
+												<input type="hidden" name="code" value="1">
+												<input type="hidden" name="id_trans" value="<?php echo $customer_data->id_trans ?>">
+												<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo $customer_data->ongkir + $total_berat_dan_subtotal->subtotal ?>">
+												<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" type="submit"><h5><b><i class="fa fa-credit-card"></i> Kartu Kredit / Debit</b></h5></button>
+											</form>
+										</th>
+									</tr>
+									<tr>
+										<th scope="row">
+											<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" onclick="window.location.href='<?php echo base_url('page/konfirmasi_pembayaran')?>'"><h5><b><i class="fa fa-bank"></i> Transfer bank</b></h5></button>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<br>
+			<div class="col-lg-12">
+				<div class="alert alert-success alert"><i class="fa fa-bullhorn"></i> Segera lakukan pembayaran sebelum <b><?php $d=strtotime("tomorrow"); echo date("Y/m/d h:i:sa",$d);?></b>. Lakukan pembayaran ke rekening bank yang tertera dibawah.</div>
+			</div>
 			<div class="row">
 			  <div class="col-lg-12">
           <div class="box-body table-responsive padding">

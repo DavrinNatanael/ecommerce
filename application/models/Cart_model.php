@@ -201,6 +201,14 @@ class Cart_model extends CI_Model
     $this->db->update($this->table, $data);
   }
 
+  function bayar($id, $data)
+  {
+    $this->db->where($this->id,$id);
+    $this->db->where('user_id', $this->session->userdata('user_id'));
+    $this->db->where('status','1');
+    $this->db->update($this->table, $data);
+  }
+
   // update data
   function update($id, $data)
   {
@@ -242,6 +250,9 @@ class Cart_model extends CI_Model
     $this->db->where('user_id', $this->session->userdata('user_id'));
     $this->db->where_not_in('status','0');
     return $this->db->get($this->table);
+  }
+  function cart_pay(){
+    $this->db->where('user_id', $this->session->userdata('user_id'));
   }
 
   function cart_history_detail()

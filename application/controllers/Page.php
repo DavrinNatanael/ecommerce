@@ -19,10 +19,16 @@ class Page extends CI_Controller {
     /* memanggil function dari masing2 model yang akan digunakan */
     $this->data['blog_data'] 					= $this->Blog_model->get_all_sidebar();
     $this->data['company_data'] 			= $this->Company_model->get_by_company();
-    $this->data['recommendation_data'] 			= $this->recommendation_model->get_all_front();
+    $this->data['recommendation_data']= $this->recommendation_model->get_all_front();
     $this->data['kategori_data'] 			= $this->Kategori_model->get_all();
 		$this->data['kontak'] 						= $this->Kontak_model->get_all();
 		$this->data['total_cart_navbar'] 	= $this->Cart_model->total_cart_navbar();
+		$this->data['itemName'] = $this->input->post('itemName');
+		$this->data['itemNumber'] = "PN12345";
+		$this->data['itemPrice'] = $this->input->post('bayartotal');
+		$this->data['idtrans'] = $this->input->post('idtrans');
+		$this->data['code'] = $this->input->post('code');
+		$this->data['currency'] = "IDR";
   }
 
 	public function company()
@@ -43,6 +49,32 @@ class Page extends CI_Controller {
 
 		$this->load->view('front/page/konfirmasi_pembayaran', $this->data);
 	}
+
+	public function bayarcc($id_trans)
+	{
+		$this->data['cart_finished']	    			= $this->Cart_model->get_cart_per_customer_finished($id_trans);
+		$this->data['customer_data'] 						= $this->Cart_model->get_data_customer();
+		$this->data['title'] 							= 'Konfirmasi Pembayaran';
+		$this->load->view('front/page/bayarcc', $this->data);
+	}
+
+	public function payment($id_trans)
+	{
+
+		$data = array(
+			'status'		=> '2',
+		);
+
+		$this->Cart_model->bayar($id_trans,$data);
+		$this->data['title'] 							= 'Konfirmasi Pembayaran';
+
+		$this->data['cart_finished']	    			= $this->Cart_model->get_cart_per_customer_finished($id_trans);
+		$this->data['customer_data'] 						= $this->Cart_model->get_data_customer();
+
+		$this->load->view('front/page/payment',$this->data);
+
+	}
+
 
 	public function konfirmasi_kirim()
 	{

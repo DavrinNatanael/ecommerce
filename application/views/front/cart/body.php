@@ -171,18 +171,18 @@
 								</a>
 					    <?php } ?>
 							<a href="<?php echo base_url() ?>">
-								<button name="hapus" type="button" class="btn btn-primary" aria-label="Left Align" title="Lanjut Belanja">
+								<button type="button" class="btn btn-primary" aria-label="Left Align" title="Lanjut Belanja">
 								  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Lanjut Belanja
 								</button>
 							</a>
 					    <?php if(empty($cart_data)){ ?>
-								<button disabled name="checkout" type="submit" class="btn btn-success" aria-label="Left Align" title="Checkout">
+								<button disabled class="btn btn-success" aria-label="Left Align" title="Checkout">
 								  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Selesai Belanja
 								</button>
 					    <?php } else { ?>
-								<button id="selesai" name="checkout" type="submit" class="btn btn-success" aria-label="Left Align" title="Checkout">
-									<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Selesai Belanja
-								</button>
+									<button id="selesai" name="checkout" type="submit" class="btn btn-success" aria-label="Left Align" title="checkout">
+										<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Selesai Belanja
+									</button>
 					    <?php } ?>
 						</div>
 					</div>

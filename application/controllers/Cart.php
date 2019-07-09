@@ -91,7 +91,6 @@ class Cart extends CI_Controller {
 							'catatan'     => $this->input->post('catatanhi'),
 						);
 						$this->Cart_model->insert_detail($data2);
-
 						// set pesan data berhasil dibuat
 						$this->session->set_flashdata('message', '<div class="alert alert-success alert">Barang berhasil ditambahkan</div>');
 						redirect(site_url('cart'));
@@ -318,10 +317,6 @@ class Cart extends CI_Controller {
 		$this->data['total_berat_dan_subtotal'] = $this->Cart_model->get_total_berat_dan_subtotal_finished($id_trans);
 		$this->data['data_bank'] 								= $this->Bank_model->get_all();
 
-		$this->session->set_flashdata('message', '
-		<div class="col-lg-12">
-			<div class="alert alert-block alert-success"><i class="ace-icon fa fa-bullhorn green"></i> Transaksi Selesai</div>
-		</div>');
 
 		$this->load->view('front/cart/finished', $this->data);
 

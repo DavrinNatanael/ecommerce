@@ -3,7 +3,10 @@
 <head>
   <title><?php echo $company_data->company_name; ?> | <?php echo $title; ?></title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- Stripe JavaScript library -->
+  <script src="https://js.stripe.com/v2/"></script>
+  <!-- jQuery is used only for this example; it isn't required to use Stripe -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <?php if($this->uri->segment('1') == 'produk' and $this->uri->segment('2') != 'katalog' and $this->uri->segment('2') != 'cari_produk'){ ?>
     <!-- Open Graph data -->
     <meta property="og:title" content="<?php echo $produk->judul_produk ?> | <?php echo $company_data->company_name ?>" />
