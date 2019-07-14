@@ -13,6 +13,7 @@ class Cart extends CI_Controller {
     $this->load->model('Company_model');
     $this->load->model('Kontak_model');
 		$this->load->model('Produk_model');
+		$this->load->model('Testimoni_model');
 
 		$this->data['company_data'] 			= $this->Company_model->get_by_company();
     $this->data['kontak'] 						= $this->Kontak_model->get_all();
@@ -369,6 +370,30 @@ class Cart extends CI_Controller {
 	{
 		$this->data['title'] 								= 'Detail Riwayat Transaksi';
 
+		$this->data['history_detail']	    	= $this->Cart_model->history_detail($id)->result();
+		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id)->row();
+		$this->data['history_total_berat'] 	= $this->Cart_model->history_total_berat($id);
+		$this->data['subtotal_history'] 		= $this->Cart_model->subtotal_history($id);
+
+		$this->load->view('front/cart/history_detail', $this->data);
+	}
+
+	public function konfirm($id){
+		$this->data['title'] 							= 'Detail Riwayat Transaksi';
+		$data = array(
+			'status'		=> '4',
+		);
+		$testi = array(
+			'id_user' => $this->input->post('usid'),
+			'id_produk' => $this->input->post('prod'),
+			'nilai' => $this->input->post('rate'),
+			'testimoni' => $this->input->post('testi'),
+			'tanggal' => date("Y/m/d"),
+		);
+		$this->Cart_model->update($id,$data);
+		$this->Testimoni_model->insertTesti($testi);
+		$this->data['cek_cart_history']	  	= $this->Cart_model->cart_history()->row();
+		$this->data['cart_history']	    		= $this->Cart_model->cart_history()->result();
 		$this->data['history_detail']	    	= $this->Cart_model->history_detail($id)->result();
 		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id)->row();
 		$this->data['history_total_berat'] 	= $this->Cart_model->history_total_berat($id);

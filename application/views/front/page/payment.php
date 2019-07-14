@@ -61,6 +61,8 @@ if(!empty($_POST['stripeToken'])){
         include_once 'dbConnect.php';
 
         // Insert tansaction data into the database
+        ?>
+        <?php
         $sql = "INSERT INTO orders(name,email,card_number,card_exp_month,card_exp_year,item_name,item_number,item_price,item_price_currency,paid_amount,paid_amount_currency,txn_id,payment_status,created,modified) VALUES('".$name."','".$email."','".$card_number."','".$card_exp_month."','".$card_exp_year."','".$itemName."','".$itemNumber."','".$itemPrice."','".$currency."','".$paidAmount."','".$paidCurrency."','".$transactionID."','".$payment_status."',NOW(),NOW())";
         $insert = $db->query($sql);
         $payment_id = $db->insert_id;
@@ -149,7 +151,7 @@ if(!empty($_POST['stripeToken'])){
 					            <h1 class="error">Your Payment has Failed</h1>
 					        <?php } ?>
 					    </div>
-					    <a href="index.php" class="btn-link">Back to Payment Page</a>
+					    <button onclick="<?php echo base_url(); ?>" class="btn btn-primary">Back to Payment Page</button>
 					</div>
         </div>
       </div>

@@ -58,6 +58,13 @@ class Page extends CI_Controller {
 		$this->load->view('front/page/bayarcc', $this->data);
 	}
 
+	public function testimoni($id)
+	{
+		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id)->row();
+		$this->data['title'] 							= 'Testimoni';
+		$this->load->view('front/page/testimoni', $this->data);
+	}
+
 	public function payment($id_trans)
 	{
 

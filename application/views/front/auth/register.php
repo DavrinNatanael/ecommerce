@@ -75,16 +75,16 @@
 
 	<?php $this->load->view('front/footer'); ?>
   <script type="text/javascript">
-	function tampilKota()
-	{
-	  provinsi_id = document.getElementById("provinsi_id").value;
-	  $.ajax({
-		  url:"<?php echo base_url();?>auth/pilih_kota/"+provinsi_id+"",
-		  success: function(response){
-		    $("#kota_id").html(response);
-		  },
-		  dataType:"html"
-	  });
-	  return false;
-	}
-</script>
+		function tampilKota()
+		{
+		  provinsi_id = document.getElementById("provinsi_id").value;
+		  $.ajax({
+			  url:"<?php echo base_url();?>auth/pilih_kota/"+provinsi_id+"",
+			  success: function(response){
+			    $("#kota_id").html(response);
+			  },
+			  dataType:"html"
+		  });
+		  return false;
+		}
+	</script>

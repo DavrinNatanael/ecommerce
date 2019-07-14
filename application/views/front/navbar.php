@@ -40,7 +40,7 @@
     <?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
       <li><a href="<?php echo base_url('cart') ?>"><i class="fa fa-shopping-cart"></i> Keranjang (<?php echo $total_cart_navbar ?>)</a></li>
     <?php } else { ?>
-      <li><a href="<?php echo base_url('auth/register') ?>"><i class="fa fa-shopping-cart"></i> Keranjang (<?php echo $total_cart_navbar ?>)</a></li>
+      <li><a href="<?php echo base_url('auth/login') ?>"><i class="fa fa-shopping-cart"></i> Keranjang (<?php echo $total_cart_navbar ?>)</a></li>
     <?php } ?>
     <?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
     <li>
@@ -55,7 +55,7 @@
       </ul>
     </li>
     <?php } else { ?>
-    <li><a href="<?php echo base_url('auth/register') ?>"><i class="fa fa-user"></i> Register / Login</a></li>
+    <li><a href="<?php echo base_url('auth/login') ?>"><i class="fa fa-user"></i> Register / Login</a></li>
     <?php } ?>
   </ul>
 </div>

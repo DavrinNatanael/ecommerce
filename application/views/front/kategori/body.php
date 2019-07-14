@@ -27,13 +27,13 @@
 			    <div class="card mb-4 box-shadow">
 			      <a href="<?php echo base_url("produk/read/$kategori->slug_produk ") ?>">
 			        <?php
-			        if(empty($kategori->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image_thumb.png'>";}
+			        if(empty($kategori->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image.png'>";}
 			        else { echo " <img class='card-img-top' src='".base_url()."assets/images/produk/".$kategori->foto.'_thumb'.$kategori->foto_type."'> ";}
 			        ?>
 			      </a>
 						<div class="card-body">
 							<a href="<?php echo base_url("produk/read/$kategori->slug_produk ") ?>">
-								<p class="card-text"><b><?php echo character_limiter($kategori->judul_produk,50) ?></b></p>
+								<p class="card-text"><b><?php echo character_limiter($kategori->judul_produk,26) ?></b></p>
 							</a>
 							<br>
 							<p align="center">

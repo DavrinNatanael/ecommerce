@@ -38,20 +38,35 @@
                   <td style="text-align:center"><?php echo strtoupper($history->kurir).' '.$history->service ?></td>
 									<td style="text-align:center">
 		                <?php if($history->status == '1'){ ?>
-		                  <button type="button" name="status" class="btn btn-sm btn-primary">BELUM DIBAYAR</button>
+		                  <p class="text-danger">BELUM DIBAYAR</p>
 		                <?php } elseif($history->status == '2'){ ?>
-		                  <button type="button" name="status" class="btn btn-sm btn-success">SUDAH DIBAYAR</button>
+		                  <p class="text-success">SUDAH DIBAYAR</p>
 		                <?php } elseif($history->status == '3'){ ?>
-											<button type="button" name="status" class="btn btn-sm btn-success">SUDAH DIKIRIM</button>
+											<a href="<?php echo base_url('page/testimoni/').$history->id_trans ?>">
+												<button type="button" name="status" class="btn btn-sm btn-success">KONFIRMASI PESANAN</button>
+											</a>
+										<?php } elseif($history->status == '4'){ ?>
+											<button disabled type="button" name="status" class="btn btn-sm btn-success">TRANSAKSI SELESAI</button>
 										<?php } ?>
 									</td>
 									<td style="text-align:center">
 										<?php if($history->resi != NULL){echo $history->resi;}else{echo "Belum ada";} ?>
 									</td>
 									<td style="text-align:center">
-                    <a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
-                      <button name="update" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-zoom-in"></i> Detail</button>
-                    </a>
+										<?php if($history->status == '3') {?>
+											<a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
+												<button name="update" class="btn btn-sm btn-warning col-sm-12"><i class="icon-headphones"></i> Komplain</button>
+													<br>
+											</a>
+											<a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
+												<br>
+												<button name="update" class="btn btn-sm btn-warning col-sm-12"><i class="icon-zoom-in"></i> Detail</button>
+											</a>
+										<?php } else {?>
+											<a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
+												<button name="update" class="btn btn-sm btn-warning col-sm-12"><i class="icon-zoom-in"></i> Detail</button>
+											</a>
+										<?php } ?>
                   </td>
                 </tr>
               <?php } ?>

@@ -15,6 +15,7 @@ class Produk extends CI_Controller
 		$this->load->model('Kategori_model');
 		$this->load->model('Kontak_model');
     $this->load->model('Produk_model');
+		$this->load->model('Testimoni_model');
 
     /* memanggil function dari masing2 model yang akan digunakan */
 		$this->data['blog_data'] 					= $this->Blog_model->get_all_sidebar();
@@ -29,14 +30,15 @@ class Produk extends CI_Controller
 	{
     /* mengambil data berdasarkan id */
 		$row = $this->Produk_model->get_by_id_front($id);
-
+		$prd = $row->id_produk;
     /* melakukan pengecekan data, apabila ada maka akan ditampilkan */
 		if ($row)
     {
       /* memanggil function dari masing2 model yang akan digunakan */
     	$this->data['produk']       	= $this->Produk_model->get_by_id_front($id);
 			$this->data['produk_lainnya']	= $this->Produk_model->get_random();
-
+			$this->data['testi'] = $this->Testimoni_model->testiUser($prd);
+			
 			$this->data['title'] = $row->judul_produk;
 
       /* memanggil view yang telah disiapkan dan passing data dari model ke view*/

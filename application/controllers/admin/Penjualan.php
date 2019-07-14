@@ -96,7 +96,7 @@ class Penjualan extends CI_Controller
       {
         $data = array(
           'resi'    => $this->input->post('resi'),
-          'status'  => '2',
+          'status'  => '3',
         );
 
         $this->Cart_model->update($this->input->post('id_trans'), $data);

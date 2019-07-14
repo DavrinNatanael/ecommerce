@@ -24,7 +24,7 @@ require_once 'config.php';
 								<p><b>Total:</b> <?php echo 'Rp.'.$itemPrice.' '; ?></p>
 						</div>
 						<form action="<?php echo base_url('page/payment/').$customer_data->id_trans; ?>" method="POST" id="paymentFrm">
-							<input type="" name="id_trans" value="<?php echo $customer_data->id_trans; ?>">
+							<input type="hidden" name="id_trans" value="<?php echo $customer_data->id_trans; ?>">
 							<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo $itemPrice ?>">
 							<div class="form-group has-feedback"><label>Name</label>
 								<input class="form-control" type="text" name="name" id="name" placeholder="Enter name" required="" autofocus="">
@@ -58,7 +58,7 @@ require_once 'config.php';
 								<p><b>Total:</b> <?php echo 'Rp.'.$itemPrice.' '; ?></p>
 						</div>
 						<form action="<?php echo base_url('page/payment/').$idtrans; ?>" method="POST" id="paymentFrm">
-							<input type="" name="id_trans" value="<?php echo $idtrans; ?>">
+							<input type="hidden" name="id_trans" value="<?php echo $idtrans; ?>">
 							<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo $itemPrice ?>">
 							<div class="form-group has-feedback"><label>Name</label>
 								<input class="form-control" type="text" name="name" id="name" placeholder="Enter name" required="" autofocus="">

@@ -40,7 +40,7 @@
         </div>
         <div class="row">
           <!-- produk terlaris bulanan -->
-          <!-- <div class="col-lg-6">
+          <div class="col-lg-6">
             <div class="box box-success">
               <div class="box-header with-border">
                 <h3 class="box-title"><label>5 PRODUK TERLARIS BULAN INI</label></h3>
@@ -70,9 +70,9 @@
                 </script>
               </div>
             </div>
-          </div> -->
+          </div>
           <!-- 5 transaksi terakhir -->
-          <div class="col-lg-12">
+          <div class="col-lg-6">
             <div class="box box-primary">
               <div class="box-header with-border">
                 <h3 class="box-title"><label>5 TRANSAKSI TERAKHIR</label></h3>
@@ -100,8 +100,12 @@
 													<?php }elseif($top5->status == '1'){ ?>
 														<button type="button" name="status" class="btn btn-warning">CHECKOUT</button>
 													<?php } elseif($top5->status == '2'){ ?>
-														<button type="button" name="status" class="btn btn-success">TERKIRIM</button>
-													<?php } ?>
+														<button type="button" name="status" class="btn btn-success">SUDAH DIBAYAR</button>
+													<?php } elseif($top5->status == '3'){ ?>
+														<button type="button" name="status" class="btn btn-success">SUDAH DIKIRIM</button>
+                          <?php } elseif($top5->status == '4'){ ?>
+														<button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+                          <?php } ?>
                         </td>
                       </tr>
                       <?php } ?>

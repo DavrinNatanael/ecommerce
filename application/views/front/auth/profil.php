@@ -14,7 +14,11 @@
 
 		<div class="col-lg-12"><h1>Profil Saya</h1><hr>
 			<div class="col-lg-12">
+				<?php if(empty($profil->photo)) { ?>
+					<img class='rounded-circle' width="200px" height="200px" src="<?php echo base_url('assets/images/no_image.png') ?>">
+				<?php } else{ ?>
 					<img class="rounded-circle" src="<?php echo base_url('assets/images/user/').$profil->photo.$profil->photo_type ?>" width="200px" height="200px">
+				<?php } ?>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-lg-6"><b>Nama</b><br>

@@ -37,18 +37,22 @@
 												<td style="text-align:center"><?php echo $penjualan->id_trans ?></td>
 												<td style="text-align:center"><?php echo $penjualan->name ?></td>
 												<td style="text-align:center">
-													<?php if($penjualan->status == '0'){ ?>
+                          <?php if($penjualan->status == '0'){ ?>
 														<button type="button" name="status" class="btn btn-danger">BELUM CHECKOUT</button>
 													<?php }elseif($penjualan->status == '1'){ ?>
 														<button type="button" name="status" class="btn btn-warning">CHECKOUT</button>
 													<?php } elseif($penjualan->status == '2'){ ?>
 														<button type="button" name="status" class="btn btn-success">SUDAH DIBAYAR</button>
-													<?php } ?>
+													<?php } elseif($penjualan->status == '3'){ ?>
+														<button type="button" name="status" class="btn btn-success">SUDAH DIKIRIM</button>
+                          <?php } elseif($penjualan->status == '4'){ ?>
+														<button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+                          <?php } ?>
 												</td>
 												<td style="text-align:center"><?php echo $penjualan->resi ?></td>
 												<td style="text-align:center">
 												<?php
-												echo anchor(site_url('admin/penjualan/'),'<i class="fa fa-search-plus"></i>','title="Lihat", class="btn btn-sm btn-primary"'); echo ' ';
+												echo anchor(site_url('admin/penjualan/view/'.$penjualan->id_trans),'<i class="fa fa-search-plus"></i>','title="Lihat", class="btn btn-sm btn-primary"'); echo ' ';
 												echo anchor(site_url('admin/penjualan/update/'.$penjualan->id_trans),'<i class="fa fa-pencil"></i>','title="Input Resi", class="btn btn-sm btn-success"');
 												?>
 												</td>

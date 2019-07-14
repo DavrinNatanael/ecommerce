@@ -33,24 +33,96 @@
 		    </div>
 			</div>
 			<div class="form-row">
-		    <div class="form-group col-lg-6"><label>No. HP</label><br>
-		      <?php echo form_input($phone);?>
-		    </div>
+				<div class="form-group col-md-6"><label>Tanggal lahir</label>
+					<?php echo form_input($lahir);?>
+				</div>
 		    <div class="form-group col-lg-6"><label>Email</label><br>
 		      <?php echo form_input($email);?>
 		    </div>
 			</div>
-	    <div class="form-group"><label>Alamat</label><br>
-	      <?php echo form_textarea($address);?>
-	    </div>
+			<div class="form-row">
+				<div class="form-group col-md-6"><label>Alamat</label><br>
+		      <?php echo form_textarea($address);?>
+		    </div>
+				<div class="form-group col-lg-6"><label>No. HP</label><br>
+		      <?php echo form_input($phone);?>
+		    </div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6"><label>Provinsi</label>
+					<?php echo form_dropdown('', $ambil_provinsi, '', $provinsi_id); ?>
+				</div>
+				<div class="form-group col-md-6"><label>Kabupaten/ Kota</label>
+					<?php echo form_dropdown('', array(''=>'- Pilih Kota -'), '', $kota_id); ?>
+				</div>
+			</div>
+			<div class="form-group"><label>Foto Lama</label>
+				<div class="form-group">
+					<?php if(empty($profil->photo)) { ?>
+						<img class='rounded-circle' width="200px" height="200px" src="<?php echo base_url('assets/images/no_image.png') ?>">
+					<?php } else{ ?>
+						<img class="rounded-circle" src="<?php echo base_url('assets/images/user/').$profil->photo.$profil->photo_type ?>" width="200px" height="200px">
+					<?php } ?>
+				</div>
+			</div>
+			<div class="form-group"><label>Foto Baru</label>
+				<input type="file" class="form-control" name="photo" id="photo" onchange="tampilkanPreview(this,'preview')"/>
+				<br><p><b>Preview</b><br>
+				<img id="preview" src="" alt="" width="250px"/>
+			</div>
 			<?php echo form_hidden('id', $user->id);?>
-			<?php echo form_hidden($csrf); ?>
-			<button type="submit" name="submit" class="btn btn-primary">Update</button>
-			<button type="reset" name="reset" class="btn btn-danger">Reset</button>
+			<!-- <?php echo form_hidden($csrf); ?> -->
+				<button type="submit" name="submit" class="btn btn-primary">Update</button>
+				<button type="reset" name="reset" class="btn btn-danger">Reset</button>
 			<?php echo form_close() ?>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function tampilKota()
+	{
+		provinsi_id = document.getElementById("provinsi_id").value;
+		$.ajax({
+			url:"<?php echo base_url();?>auth/pilih_kota/"+provinsi_id+"",
+			success: function(response){
+				$("#kota_id").html(response);
+			},
+			dataType:"html"
+		});
+		return false;
+	}
+</script>
+<script type="text/javascript">
+function tampilkanPreview(photo,idpreview)
+{ //membuat objek gambar
+	var gb = photo.files;
+	//loop untuk merender gambar
+	for (var i = 0; i < gb.length; i++)
+	{ //bikin variabel
+		var gbPreview = gb[i];
+		var imageType = /image.*/;
+		var preview=document.getElementById(idpreview);
+		var reader = new FileReader();
+		if (gbPreview.type.match(imageType))
+		{ //jika tipe data sesuai
+			preview.file = gbPreview;
+			reader.onload = (function(element)
+			{
+				return function(e)
+				{
+					element.src = e.target.result;
+				};
+			})(preview);
+			//membaca data URL gambar
+			reader.readAsDataURL(gbPreview);
+		}
+			else
+			{ //jika tipe data tidak sesuai
+				alert("Tipe file tidak sesuai. Gambar harus bertipe .png, .gif atau .jpg.");
+			}
+	}
+}
+</script>
 
 
 <?php $this->load->view('front/footer'); ?>

@@ -184,7 +184,7 @@ class Produk extends CI_Controller
               // membuat thumbnail
               $config['create_thumb']   = TRUE;
               // rasio resolusi
-              $config['maintain_ratio'] = TRUE;
+              $config['maintain_ratio'] = FALSE;
               // lebar
               $config['width']          = 400;
               // tinggi

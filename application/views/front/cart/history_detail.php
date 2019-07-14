@@ -15,7 +15,7 @@
 
 	    <div class="col-lg-12"><h1>Detail Riwayat Transaksi</h1><hr>
         <h4>Invoice NO. <?php echo $history_detail_row->id_trans ?></h4>
-				<?php if($history_detail_row->status=='2'){ ?>
+				<?php if($history_detail_row->status=='2' || $history_detail_row->status=='3' || $history_detail_row->status=='4'){ ?>
 					<?php echo form_open('cart/download_invoice/'.$history_detail_row->id_trans) ?>
 						<button type="submit" name="download_invoice" class="btn btn-sm btn-success">Download Bukti pembayaran</button>
 					<?php echo form_close() ?>
@@ -99,6 +99,8 @@
 			                  <span class="text-success">SUDAH DIBAYAR</span>
 			                <?php } elseif($history->status == '3'){ ?>
 												<span class="text-success">SUDAH DIKIRIM</span>
+											<?php } elseif($history->status == '4'){ ?>
+												<span class="text-success">TRANSAKSI SELESAI</span>
 											<?php } ?>
 										</td>
                   </tr>

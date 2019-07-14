@@ -153,31 +153,29 @@
 				<div class="col-lg-12"><hr><h4 class="text-center">Testimonial</h4><hr>
 					<p>
 						<div class="container col-lg-12">
+							<?php foreach((array)$testi as $testimoni){ ?>
 							<div class="card">
 							    <div class="card-body">
 							        <div class="row">
 						        	    <div class="col-md-2">
 						        	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-															<p class="text-muted text-center">15 Minutes Ago</p>
+															<p class="text-muted text-center"><?php echo $testimoni->tanggal; ?></p>
 						        	    </div>
 						        	    <div class="col-md-10">
 						        	        <p>
-						        	            <a class="float-left" href="#"><strong>User</strong></a>
-						        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-						                      <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-						        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-						        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-																	<span class="float-right"><i class="text-warning fa fa-star"></i></span>
+						        	            <a class="float-left" href="#"><strong><?php echo $testimoni->id_user; ?></strong></a>
+																	<?php for ($i=1; $i <=$testimoni->nilai ; $i++) { ?>
+							        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+																	<?php } ?>
 						        	       </p>
 						        	       <div class="clearfix"></div>
-														 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+														 <p><?php echo $testimoni->testimoni; ?></p>
 						        	        <p>
-						        	            <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
 						        	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
 						        	       </p>
 						        	    </div>
 							        </div>
-							        	<div class="card card-inner">
+							        		<div class="card card-inner">
 						            	    <div class="card-body">
 						            	        <div class="row">
 						                    	    <div class="col-md-2">
@@ -188,7 +186,6 @@
 						                    	        <p><a href="#"><strong>Admin</strong></a></p>
 																					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 						                    	        <p>
-						                    	            <a class="float-right btn btn-outline-primary ml-2">  <i class="fa fa-reply"></i> Reply</a>
 						                    	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
 						                    	       </p>
 						                    	    </div>
@@ -197,6 +194,7 @@
 							            </div>
 								    </div>
 							</div>
+						<?php } ?>
 						</div>
 					</p>
 				</div>
@@ -210,7 +208,7 @@
 									<div class="card mb-4 box-shadow">
 										<a href="<?php echo base_url("produk/$lainnya->slug_produk ") ?>">
 											<?php
-											if(empty($lainnya->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image_thumb.png'>";}
+											if(empty($lainnya->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image.png'>";}
 											else { echo " <img class='card-img-top' src='".base_url()."assets/images/produk/".$lainnya->foto.'_thumb'.$lainnya->foto_type."'> ";}
 											?>
 										</a>

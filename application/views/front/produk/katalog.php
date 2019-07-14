@@ -20,13 +20,13 @@
 			    <div class="card mb-4 box-shadow">
 			      <a href="<?php echo base_url("produk/$katalog->slug_produk ") ?>">
 			        <?php
-			        if(empty($katalog->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image_thumb.png'>";}
+			        if(empty($katalog->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image.png'>";}
 			        else { echo " <img class='card-img-top' src='".base_url()."assets/images/produk/".$katalog->foto.'_thumb'.$katalog->foto_type."'> ";}
 			        ?>
 			      </a>
 						<div class="card-body">
 							<a href="<?php echo base_url("produk/$katalog->slug_produk ") ?>">
-								<p class="card-text"><b><?php echo character_limiter($katalog->judul_produk,50) ?></b></p>
+								<p class="card-text"><b><?php echo character_limiter($katalog->judul_produk,25) ?></b></p>
 							</a>
 							<br>
 							<p align="center">
@@ -34,9 +34,15 @@
 								<b>Rp <?php echo number_format($katalog->harga_diskon) ?></b> <font style="font-size:15px"><span class="badge badge-pill badge-primary"><?php echo $katalog->diskon ?>% OFF</span></font>
 							</p>
 							<p align="center">
+								<?php if($katalog->stok<1) {?>
+								<a href="#">
+									<button disabled class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Beli</button>
+								</a>
+							<?php } else {?>
 								<a href="#">
 									<button class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Beli</button>
 								</a>
+							<?php } ?>
 							</p>
 						</div>
 			    </div>

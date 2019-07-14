@@ -24,7 +24,7 @@
               </div>
               <div class="box-body">
 								<?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-                <?php echo form_open() ?>
+                <?php echo form_open('admin/laporan/export_all') ?>
                   <button type="submit" name="submit" class="btn btn-success">Download</button>
                 <?php echo form_close() ?>
 							</div>
@@ -36,7 +36,7 @@
               <div class="box-header with-border">
                 <h4 class="box-title"><b>Per Periode</b></h4>
               </div>
-              <?php echo form_open() ?>
+              <?php echo form_open('admin/laporan/export_periode') ?>
                 <div class="box-body">
                   <div class="panel-body">
                   <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>

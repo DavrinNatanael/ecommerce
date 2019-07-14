@@ -104,7 +104,7 @@ class Produk_model extends CI_Model
   function get_all_new_home()
   {
     $this->db->limit(8);
-    $this->db->order_by($this->id, $this->order);
+    $this->db->where_not_in('stok',0);
     return $this->db->get($this->table)->result();
   }
 

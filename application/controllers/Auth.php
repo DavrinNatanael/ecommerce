@@ -37,7 +37,7 @@ class Auth extends CI_Controller {
 		$this->data['identity_column'] = $identity_column;
 
 		// validasi form input
-		$this->form_validation->set_rules('name', 'Nama', 'required|trim|is_unique[users.name]');
+		//$this->form_validation->set_rules('name', 'Nama', 'required|trim|is_unique[users.name]');
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('phone', 'No. HP', 'trim|numeric');
@@ -307,52 +307,232 @@ class Auth extends CI_Controller {
 		if (isset($_POST) && !empty($_POST))
 		{
 			// mengecek validitas request update data
-			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')){
-				show_error($this->lang->line('error_csrf'));
-			}
-
+			// if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')){
+			// 	show_error($this->lang->line('error_csrf'));
+			// }
+			$dob = $this->input->post('lahir');
+			$diff = (date('Y') - date('Y',strtotime($dob)));
 			// update password jika dimasukkan/ diisi
 			if ($this->input->post('password')){
-				$this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-				$this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
-			}
+ 				$this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+ 				$this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+ 			}
 
-			// jalankan form_validation
-			if ($this->form_validation->run() === TRUE)
-			{
-				// siapkan data
-				$data = array(
-					'name' 			=> $this->input->post('name'),
-					'username'  => $this->input->post('username'),
-					'email'     => strtolower($this->input->post('email')),
-					'address'  	=> $this->input->post('address'),
-					'phone'     => $this->input->post('phone'),
-				);
+ 			if ($this->form_validation->run() === TRUE)
+ 			{
+ 				/* jika ada file foto yang ingin diupload*/
+ 				if ($_FILES['photo']['error'] <> 4)
+ 				{
+ 					$delete = $this->Ion_auth_model->del_by_id($this->input->post('id'));
 
-				// jika password terisi
-				if ($this->input->post('password')){
-					$data['password'] = $this->input->post('password');
-				}
+          // Jika ada foto lama, maka hapus foto kemudian upload yang baru
+          if($delete)
+ 					{
+ 						// menyimpan lokasi gambar dalam variable
+ 	          $dir = "assets/images/user/".$delete->photo.$delete->photo_type;
+ 	          $dir_thumb = "assets/images/user/".$delete->photo.'_thumb'.$delete->photo_type;
 
-				// apabila berhasil update data maka diarahkan ke halaman profil
-				if($this->ion_auth->update($user->id, $data))
-				{
-					$this->session->set_flashdata('message', '
-	        <div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
-						<i class="ace-icon fa fa-bullhorn green"></i> Update Data Berhasil
-	        </div>');
-	        redirect(site_url('auth/profil'));
-				}
-				else{
-					// Set pesan
-					$this->session->set_flashdata('message', '
-	        <div class="alert alert-block alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
-						<i class="ace-icon fa fa-bullhorn green"></i> Update Data Gagal
-	        </div>');
-	        redirect(site_url(base_url()));
-				}
-			}
-		}
+ 						if($delete->photo > 0){
+ 							// Hapus foto
+ 		          unlink($dir);
+ 		          unlink($dir_thumb);
+ 						}
+
+ 						$nmfile = strtolower(url_title($this->input->post('name'))).date('YmdHis');
+
+ 						/* memanggil library upload ci */
+ 						$config['upload_path']      = './assets/images/user/';
+ 						$config['allowed_types']    = 'jpg|jpeg|png|gif';
+ 						$config['max_size']         = '2048'; // 2 MB
+ 						$config['file_name']        = $nmfile; //name yang terupload nantinya
+
+ 						$this->load->library('upload', $config);
+
+ 						if (!$this->upload->do_upload('photo'))
+ 						{
+ 							//file gagal diupload -> kembali ke form tambah
+ 							$error = array('error' => $this->upload->display_errors());
+ 							$this->session->set_flashdata('message', '<div class="alert alert-danger alert">'.$error['error'].'</div>');
+ 						}
+ 							//file berhasil diupload -> lanjutkan ke query INSERT
+ 							else
+ 							{
+ 								$photo = $this->upload->data();
+ 								$thumbnail                = $config['file_name'];
+ 								// library yang disediakan codeigniter
+ 								$config['image_library']  = 'gd2';
+ 								// gambar yang akan dibuat thumbnail
+ 								$config['source_image']   = './assets/images/user/'.$photo['file_name'].'';
+ 								// membuat thumbnail
+ 								$config['create_thumb']   = TRUE;
+ 								// rasio resolusi
+ 								$config['maintain_ratio'] = FALSE;
+ 								// lebar
+ 								$config['width']          = 250;
+ 								// tinggi
+ 								$config['height']         = 250;
+
+ 								$this->load->library('image_lib', $config);
+ 								$this->image_lib->resize();
+
+ 								$data = array(
+ 									'name' 					=> $this->input->post('name'),
+ 									'username'  		=> $this->input->post('username'),
+ 									'email'     		=> strtolower($this->input->post('email')),
+ 									'address'  			=> $this->input->post('address'),
+ 									'phone'     		=> $this->input->post('phone'),
+ 									'photo'        	=> $nmfile,
+                  'photo_type'   	=> $photo['file_ext'],
+                  'uploader'     	=> $this->session->userdata('identity'),
+									'provinsi' 		=> $this->input->post('provinsi_id'),
+									'kota'   			=> $this->input->post('kota_id'),
+									'lahir'   		=> $this->input->post('lahir'),
+									'umur'	=>$diff,
+ 								);
+
+ 								// jika password terisi
+ 								if ($this->input->post('password')){
+ 									$data['password'] = $this->input->post('password');
+ 								}
+
+ 								// mengecek apakah sedang mengupdate data user
+ 								if($this->ion_auth->update($user->id, $data))
+ 								{
+ 									$this->session->set_flashdata('message', '
+ 					        <div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 										<i class="ace-icon fa fa-bullhorn green"></i> Update Data Berhasil
+ 					        </div>');
+ 					        redirect(base_url('auth/profil'));
+ 								}
+ 								else{
+ 									// Set pesan
+ 									$this->session->set_flashdata('message', '
+ 					        <div class="alert alert-block alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 										<i class="ace-icon fa fa-bullhorn green"></i> Update Data Gagal
+ 					        </div>');
+ 					        redirect(base_url('auth/profil'));
+ 								}
+ 							}
+ 					}
+ 						// Jika tidak ada foto pada record, maka upload foto baru
+ 						else
+ 						{
+ 							//load uploading file library
+ 							$config['upload_path']      = './assets/images/user/';
+ 							$config['allowed_types']    = 'jpg|jpeg|png|gif';
+ 							$config['max_size']         = '2048'; // 2 MB
+ 							$config['file_name']        = $nmfile; //name yang terupload nantinya
+
+ 							$this->load->library('upload', $config);
+
+ 							// Jika file gagal diupload -> kembali ke form update
+ 							if (!$this->upload->do_upload('photo'))
+ 							{
+ 								//file gagal diupload -> kembali ke form tambah
+ 		            $error = array('error' => $this->upload->display_errors());
+ 		            $this->session->set_flashdata('message', '<div class="alert alert-danger alert">'.$error['error'].'</div>');
+ 							}
+ 								// Jika file berhasil diupload -> lanjutkan ke query INSERT
+ 								else
+ 								{
+ 									$photo = $this->upload->data();
+ 									// library yang disediakan codeigniter
+ 									$thumbnail                = $config['file_name'];
+ 									//name yang terupload nantinya
+ 									$config['image_library']  = 'gd2';
+ 									// gambar yang akan dibuat thumbnail
+ 									$config['source_image']   = './assets/images/user/'.$photo['file_name'].'';
+ 									// membuat thumbnail
+ 									$config['create_thumb']   = TRUE;
+ 									// rasio resolusi
+ 									$config['maintain_ratio'] = FALSE;
+ 									// lebar
+ 									$config['width']          = 250;
+ 									// tinggi
+ 									$config['height']         = 250;
+
+ 									$this->load->library('image_lib', $config);
+ 									$this->image_lib->resize();
+
+ 									$data = array(
+ 										'name' 						=> $this->input->post('name'),
+ 										'username'  			=> $this->input->post('username'),
+ 										'email'     			=> strtolower($this->input->post('email')),
+ 										'address'  				=> $this->input->post('address'),
+ 										'phone'     			=> $this->input->post('phone'),
+ 										'photo'        		=> $nmfile,
+ 	                  'photo_type'   		=> $photo['file_ext'],
+ 	                  'uploader'        => $this->session->userdata('identity'),
+										'provinsi' 		=> $this->input->post('provinsi_id'),
+										'kota'   			=> $this->input->post('kota_id'),
+										'lahir'   		=> $this->input->post('lahir'),
+										'umur'	=>$diff,
+ 									);
+
+ 									// jika password terisi
+ 									if ($this->input->post('password')){
+ 										$data['password'] = $this->input->post('password');
+ 									}
+
+ 									// mengecek apakah sedang mengupdate data user
+ 									if($this->ion_auth->update($user->id, $data))
+ 									{
+ 										$this->session->set_flashdata('message', '
+ 						        <div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 											<i class="ace-icon fa fa-bullhorn green"></i> Update Data Berhasil
+ 						        </div>');
+ 						        redirect(base_url('auth/profil'));
+ 									}
+ 									else{
+ 										$this->session->set_flashdata('message', '
+ 						        <div class="alert alert-block alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 											<i class="ace-icon fa fa-bullhorn green"></i> Update Data Gagal
+ 						        </div>');
+ 						        redirect(base_url('auth/profil'));
+ 									}
+ 								}
+ 						}
+ 				}
+ 				  // Jika file upload kosong
+ 					else
+ 					{
+ 						$data = array(
+ 							'name' 			=> $this->input->post('name'),
+ 							'username'  => $this->input->post('username'),
+ 							'email'     => strtolower($this->input->post('email')),
+ 							'address'  	=> $this->input->post('address'),
+ 							'phone'     => $this->input->post('phone'),
+ 							'uploader'  => $this->session->userdata('identity'),
+							'provinsi' 		=> $this->input->post('provinsi_id'),
+							'kota'   			=> $this->input->post('kota_id'),
+							'lahir'   		=> $this->input->post('lahir'),
+							'umur'	=>$diff,
+ 						);
+
+ 						// jika password terisi
+ 						if ($this->input->post('password')){
+ 							$data['password'] = $this->input->post('password');
+ 						}
+
+ 						// mengecek apakah sedang mengupdate data user
+ 						if($this->ion_auth->update($user->id, $data))
+ 						{
+ 							$this->session->set_flashdata('message', '
+ 							<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 								<i class="ace-icon fa fa-bullhorn green"></i> Update Data Berhasil
+ 							</div>');
+ 						redirect(base_url('auth/profil'));
+ 						}
+ 						else{
+ 							$this->session->set_flashdata('message', '
+ 							<div class="alert alert-block alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+ 								<i class="ace-icon fa fa-bullhorn green"></i> Update Data Gagal
+ 							</div>');
+ 							redirect(base_url('auth/profil'));
+ 						}
+ 					}
+ 			}
+ 		}
 
 		// perintah security csrf dari ion_auth, detailnya bisa baca di https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
 		$this->data['csrf'] = $this->_get_csrf_nonce();
@@ -413,6 +593,25 @@ class Auth extends CI_Controller {
 			'id'   => 'password_confirm',
 			'class'  => 'form-control',
 			'placeholder'  => 'diisi jika mengubah password'
+		);
+		$this->data['lahir'] = array(
+			'name'  => 'lahir',
+			'id'    => 'lahir',
+			'type'	=> 'date',
+			'class'  => 'form-control',
+			'value' => $this->form_validation->set_value('lahir', $user->lahir),
+		);
+		$this->data['provinsi_id'] = array(
+			'name'        => 'provinsi_id',
+			'id'          => 'provinsi_id',
+			'class'       => 'form-control',
+			'onChange'    => 'tampilKota()',
+			'selected' => $this->form_validation->set_value('provinsi_id', $user->provinsi),
+		);
+		$this->data['kota_id'] = array(
+			'name'        => 'kota_id',
+			'id'          => 'kota_id',
+			'class'       => 'form-control',
 		);
 
 		$this->data['ambil_provinsi'] = $this->Wilayah_model->get_provinsi();

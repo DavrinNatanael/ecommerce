@@ -21,7 +21,7 @@
 				    <div class="card mb-4 box-shadow">
 				      <a href="<?php echo base_url("produk/$hasil_pencarian->slug_produk ") ?>">
 				        <?php
-				        if(empty($hasil_pencarian->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image_thumb.png'>";}
+				        if(empty($hasil_pencarian->foto)) {echo "<img class='card-img-top' src='".base_url()."assets/images/no_image.png'>";}
 				        else { echo " <img class='card-img-top' src='".base_url()."assets/images/produk/".$hasil_pencarian->foto.'_thumb'.$hasil_pencarian->foto_type."'> ";}
 				        ?>
 				      </a>

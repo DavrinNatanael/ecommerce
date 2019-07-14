@@ -53,7 +53,7 @@
                             <div class="form-group"><label>Foto Baru</label>
                               <input type="file" class="form-control" name="photo" id="photo" onchange="tampilkanPreview(this,'preview')"/>
                               <br><p><b>Preview</b><br>
-                              <img id="preview" src="" alt="" width="350px"/>
+                              <img id="preview" src="" alt="" width="250px"/>
                             </div>
                             <hr>
                             <button type="submit" name="submit" class="btn btn-success">Submit</button>
