@@ -47,6 +47,8 @@
 											</a>
 										<?php } elseif($history->status == '4'){ ?>
 											<button disabled type="button" name="status" class="btn btn-sm btn-success">TRANSAKSI SELESAI</button>
+										<?php } elseif($history->status == '5'){?>
+										<p class="text-danger">TRANSAKSI DIBATALKAN</p>
 										<?php } ?>
 									</td>
 									<td style="text-align:center">

@@ -16,29 +16,14 @@
 			<div class="row">
 			  <div class="col-lg-12">
 					<?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-					<?php $no=1; foreach ($cart_data as $cart){ ?>
-							<input type="hidden" value="<?php echo $no++ ?>">
-							<input type="hidden" value="<?php echo $cart->judul_produk ?>">
-							<input type="hidden" value="<?php echo number_format($cart->harga_diskon) ?>">
-							<input type="hidden" value="<?php echo $cart->berat ?>">
-							<form action="<?php echo base_url('cart/update/').$cart->produk_id ?>" method="post">
-							<input type="hidden" name="produk_id" value="<?php echo $cart->produk_id ?>">
-							<input type="hidden" id="qty2" type="number" name="qty" class="form-control" style="width:50px;" name="produk_id" value="<?php echo $cart->total_qty ?>" min="1" max="9">
-							<input type="hidden" id="tmp" type="number" class="form-control" style="width:50px;" value="<?php echo $cart->total_qty ?>" min="1" max="9">
-							<input type="hidden" id="berathi2" value="<?php echo $cart->total_berat ?>">
-							<input type="hidden" id="hargahi2" value="<?php echo number_format($cart->subtotal) ?>">
-							<div class="float-right">
-								<button hidden="hidden" id="refresh" name="update" class="btn btn-success"><i class="fa fa-save"></i> Simpan perubahan</button>
-							</div>
-							</form>
-					<?php } ?>
+
           <div class="box-body table-responsive padding">
 						<br>
             <table id="datatable" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th style="text-align: center">No.</th>
-                  <th style="text-align: center">Barang</th>
+                  <th style="text-align: center; width:400px;">Barang</th>
 									<th style="text-align: center">Harga</th>
                   <th style="text-align: center">Berat</th>
 									<th style="text-align: center">Qty</th>
@@ -52,27 +37,28 @@
               <?php $no=1; foreach ($cart_data as $cart){ ?>
                 <tr>
                   <td style="text-align:center"><?php echo $no++ ?></td>
-                  <td style="text-align:left"><a href="<?php echo base_url('produk/read/').$cart->slug_produk ?>"><?php echo $cart->judul_produk ?></a></td>
+                  <td style="text-align:left; width:400px;"><a href="<?php echo base_url('produk/read/').$cart->slug_produk ?>"><?php echo $cart->judul_produk ?></a></td>
 									<td style="text-align:center"><?php echo number_format($cart->harga_diskon) ?></td>
 									<td style="text-align:center"><?php echo $cart->berat ?></td>
 									<form action="<?php echo base_url('cart/update/').$cart->produk_id ?>" method="post">
 									<td style="text-align:center">
 										<input type="hidden" name="produk_id" value="<?php echo $cart->produk_id ?>">
-										<input id="qty" type="number" name="qty" class="form-control" style="width:50px;" name="produk_id" value="<?php echo $cart->total_qty ?>" min="1" max="9">
+										<input id="qty<?php echo $no-1 ?>" type="number" name="qty" class="form-control" style="width:50px;" name="produk_id" value="<?php echo $cart->total_qty ?>" min="1" max="9">
 									</td>
-                  <td id="berat" style="text-align:center">
-										<input type="hidden" id="berathi" value="<?php echo $cart->berat ?>">
+                  <td id="berat<?php echo $no-1 ?>" style="text-align:center">
+										<input type="hidden" id="berathi<?php echo $no-1 ?>" value="<?php echo $cart->berat ?>">
 										<?php echo $cart->total_berat ?>
 									</td>
-                  <td id="harga" style="text-align:center">
-										<input type="hidden" id="hargahi" value="<?php echo $cart->harga_diskon ?>">
+                  <td id="harga<?php echo $no-1 ?>" style="text-align:center">
+										<input type="hidden" id="hargahi<?php echo $no-1 ?>" value="<?php echo $cart->harga_diskon ?>">
 										<?php echo number_format($cart->subtotal) ?>
 									</td>
 									<td style="text-align:center">
 										<input type="hidden" name="produk_id" value="<?php echo $cart->produk_id ?>">
-										<input id="qty" type="text" name="catatan" class="form-control" name="produk_id" value="<?php echo $cart->catatan ?>" min="1" max="9">
+										<input id="catatan<?php echo $no-1 ?>" type="text" name="catatan" onchange="tambah<?php echo $no-1 ?>()" class="form-control" value="<?php echo $cart->catatan ?>">
 									</td>
                   <td style="text-align:center">
+										<button type="submit" name="update" class="btn btn-sm btn-danger"><i class="fa fa-refresh"></i></button>
 										<button type="submit" name="delete" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></button>
                   </td>
 									</form>
@@ -192,45 +178,27 @@
 				<?php } ?>
 			<?php echo form_close() ?>
 	  </div>
+
 		<script type="text/javascript">
-				var qty = document.getElementById("qty");
-				var refresh = document.getElementById("refresh");
-				var qty2 = document.getElementById("qty2");
-				var berathi = document.getElementById("berathi");
-				var hargahi = document.getElementById("hargahi");
-				var berat = document.getElementById("berat");
-				var harga = document.getElementById("harga");
-				var hargahi2 = document.getElementById("hargahi2");
-				var berathi2 = document.getElementById("berathi2");
 				var tmp = document.getElementById("tmp");
+				var tmp2 = document.getElementById("tmp2");
 				var warn = document.getElementById("warn");
 				var kurir = document.getElementById("kurir");
 				var selesai = document.getElementById("selesai");
-				qty.addEventListener("click", total);
-				function total(){
-					if (tmp.value!=qty.value) {
-						refresh.removeAttribute("hidden");
-						warn.removeAttribute("hidden");
-						kurir.disabled=true;
-						selesai.disabled=true;
-						qty2.value = qty.value;
-						harga.innerHTML = hargahi.value * qty.value;
-						berat.innerHTML = berathi.value * qty.value;
-						hargahi2.value = harga.innerHTML;
-						berathi2.value = berat.innerHTML;
+				var refresh = document.getElementById("refresh");
+				<?php for ($i=1; $i < $no; $i++) { ?>
+					var qty<?php echo $i ?> = document.getElementById("qty<?php echo $i ?>");
+					var berat<?php echo $i ?> = document.getElementById("berat<?php echo $i ?>");
+					var harga<?php echo $i ?> = document.getElementById("harga<?php echo $i ?>");
+					var berathi<?php echo $i ?> = document.getElementById("berathi<?php echo $i ?>");
+					var hargahi<?php echo $i ?> = document.getElementById("hargahi<?php echo $i ?>");
+					qty<?php echo $i ?>.addEventListener("click", total<?php echo $i ?>);
+
+					function total<?php echo $i ?>(){
+						berat<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * berathi<?php echo $i ?>.value;
+						harga<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * hargahi<?php echo $i ?>.value;
 					}
-					else {
-						refresh.setAttribute("hidden", "hidden");
-						warn.setAttribute("hidden", "hidden");
-						kurir.disabled=false;
-						selesai.disabled=false;
-						qty2.value = qty.value;
-						harga.innerHTML = hargahi.value * qty.value;
-						berat.innerHTML = berathi.value * qty.value;
-						hargahi2.value = harga.innerHTML;
-						berathi2.value = berat.innerHTML;
-					}
-				}
+				<?php } ?>
 		</script>
 		<script type="text/javascript">
 		$(document).ready(function()

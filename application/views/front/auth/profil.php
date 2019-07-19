@@ -11,7 +11,7 @@
 				</ol>
 			</nav>
     </div>
-
+		
 		<div class="col-lg-12"><h1>Profil Saya</h1><hr>
 			<div class="col-lg-12">
 				<?php if(empty($profil->photo)) { ?>

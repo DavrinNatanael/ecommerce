@@ -4,6 +4,7 @@
   <title><?php echo $company_data->company_name; ?> | <?php echo $title; ?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- Stripe JavaScript library -->
+  
   <script src="https://js.stripe.com/v2/"></script>
   <!-- jQuery is used only for this example; it isn't required to use Stripe -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -35,6 +36,10 @@
   <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.png" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114929317-1"></script>
+
+
+  <script src="<?php echo base_url('assets/js/') ?>fech.js"></script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}

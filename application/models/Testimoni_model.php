@@ -10,7 +10,8 @@ class Testimoni_model extends CI_Model
   }
 
   function testiUser($prd){
-    $this->db->where('id_produk',$prd);
+    $this->db->join('users', 'rating.id_users=users.id');
+    $this->db->where('item_id',$prd);
     return $this->db->get($this->table)->result();
   }
 }

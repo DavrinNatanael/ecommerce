@@ -2,8 +2,8 @@
 
 class recommendation_model extends CI_Model
 {
-  public $table = 'recommendation';
-  public $id    = 'id_recommendation';
+  public $table = 'produk';
+  public $id    = 'id_produk';
   public $order = 'DESC';
 
   var $column = array('id_recommendation','no_urut','produk_id','created','created_by','modified','modified_by');
@@ -17,9 +17,8 @@ class recommendation_model extends CI_Model
 
   function get_all_front()
   {
-    $this->db->join('produk', 'recommendation.produk_id = produk.id_produk');
-    $this->db->order_by('no_urut', 'ASC');
-    $this->db->limit('5');
+    //$this->db->join('produk', 'recommendation.produk_id = produk.id_produk');
+    $this->db->order_by($this->id);
     return $this->db->get($this->table)->result();
   }
 

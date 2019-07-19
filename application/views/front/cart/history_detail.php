@@ -20,7 +20,9 @@
 						<button type="submit" name="download_invoice" class="btn btn-sm btn-success">Download Bukti pembayaran</button>
 					<?php echo form_close() ?>
 					<br>
-		    <?php } else {?>
+		    <?php } elseif($history_detail_row->status=='5'){?>
+					<p class="text-danger">TRANSAKSI DIBATALKAN</p>
+				<?php } else { ?>
 					<div class="col-lg-12">
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 						  Pilih metode pembayaran
@@ -61,7 +63,7 @@
 						  </div>
 						</div>
 						<br>
-						<div class="alert alert-success alert"><i class="fa fa-bullhorn"></i> Segera lakukan pembayaran sebelum <b><?php $d=strtotime("tomorrow"); echo date("Y/m/d h:i:sa",$d);?></b>. Jika pesanan anda sudah melewati batas yang telah ditentukan, akan secara otomatis dibatalkan oleh sistem.</div>
+						<div class="alert alert-success alert"><i class="fa fa-bullhorn"></i> Segera lakukan pembayaran sebelum <b><?php $d=strtotime("tomorrow"); echo date("Y/m/d h:i A",$d);?></b>. Jika pesanan anda sudah melewati batas yang telah ditentukan, akan secara otomatis dibatalkan oleh sistem.</div>
 					</div>
 				<?php } ?>
 				<div class="row">

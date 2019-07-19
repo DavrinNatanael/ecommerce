@@ -1,6 +1,6 @@
 <div id='cssmenu' class="align-center">
   <ul>
-    <li><a href='<?php echo base_url() ?>'>Home V2</a></li>
+    <li><a href='<?php echo base_url() ?>'><?php echo $company_data->company_name; ?></a></li>
     <li class='active'><a href='#'><i class="fa fa-tags"></i> Kategori</a>
       <ul>
         <li><a href="<?php echo base_url('produk/katalog') ?>">Semua Produk</a></li>

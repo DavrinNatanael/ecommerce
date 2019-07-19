@@ -139,11 +139,12 @@ class Produk_model extends CI_Model
     return $this->db->get($this->table)->row();
   }
 
-  function get_random()
+  function get_random($kat,$prd)
   {
     $this->db->limit(3);
     $this->db->order_by('judul_produk','random');
-    //$this->db->like('subkat_id', 4);
+    $this->db->like('subkat_id', $kat);
+    $this->db->where_not_in('id_produk',$prd);
     return $this->db->get($this->table)->result();
   }
 

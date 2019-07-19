@@ -12,13 +12,12 @@
 			  </ol>
 			</nav>
     </div>
-		<!-- Kolom kiri -->
 		<div class="col-lg-9">
       <h1><?php echo $produk->judul_produk ?></h1><hr>
 			<div class="row">
 			  <div class="col-sm-5" align="center">
 		    	<?php
-		      if(empty($produk->foto)) {echo "<img class='img-thumbnail' src='".base_url()."assets/images/no_image_thumb.png' width='400' height='400'>";}
+		      if(empty($produk->foto)) {echo "<img class='img-thumbnail' src='".base_url()."assets/images/no_image.png' width='400' height='400'>";}
 		      else
 					{
 						echo "
@@ -153,45 +152,29 @@
 				<div class="col-lg-12"><hr><h4 class="text-center">Testimonial</h4><hr>
 					<p>
 						<div class="container col-lg-12">
-							<?php foreach((array)$testi as $testimoni){ ?>
+							<?php foreach(array_reverse((array)$testi) as $testimoni){ ?>
 							<div class="card">
 							    <div class="card-body">
 							        <div class="row">
 						        	    <div class="col-md-2">
+														<?php if(empty($testimoni->photo)){ ?>
 						        	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-															<p class="text-muted text-center"><?php echo $testimoni->tanggal; ?></p>
+														<?php } else { ?>
+															<img src="<?php echo base_url('assets/images/user/').$testimoni->photo.$testimoni->photo_type ?>" class="rounded-circle" width="100px" height="100px"/>
+														<?php } ?>
+															<p class="text-muted text-center"><?php echo $testimoni->date_crate; ?></p>
 						        	    </div>
 						        	    <div class="col-md-10">
 						        	        <p>
-						        	            <a class="float-left" href="#"><strong><?php echo $testimoni->id_user; ?></strong></a>
-																	<?php for ($i=1; $i <=$testimoni->nilai ; $i++) { ?>
-							        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+						        	            <a class="float-left" href="#"><strong><?php echo $testimoni->name; ?></strong></a>
+																	<?php for ($i=1; $i <=$testimoni->rating; $i++) { ?>
+							        	            <span class="float-right"><i style="color:gold;" class="fa fa-star"></i></span>
 																	<?php } ?>
 						        	       </p>
 						        	       <div class="clearfix"></div>
 														 <p><?php echo $testimoni->testimoni; ?></p>
-						        	        <p>
-						        	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
-						        	       </p>
 						        	    </div>
 							        </div>
-							        		<div class="card card-inner">
-						            	    <div class="card-body">
-						            	        <div class="row">
-						                    	    <div class="col-md-2">
-						                    	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-						                    	        <p class="text-muted text-center">15 Minutes Ago</p>
-						                    	    </div>
-						                    	    <div class="col-md-10">
-						                    	        <p><a href="#"><strong>Admin</strong></a></p>
-																					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-						                    	        <p>
-						                    	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
-						                    	       </p>
-						                    	    </div>
-						            	        </div>
-						            	    </div>
-							            </div>
 								    </div>
 							</div>
 						<?php } ?>
@@ -203,7 +186,6 @@
 				<div class="col-lg-12"><hr><h4>PRODUK LAINNYA</h4><hr>
 					<div class="row">
 					  <?php foreach($produk_lainnya as $lainnya){ ?>
-							<?php if($lainnya->subkat_id == $produk->subkat_id){ ?>
 								<div class="col-xl-4 col-lg-6 col-md-6 col-sm-4 col-xs-12">
 									<div class="card mb-4 box-shadow">
 										<a href="<?php echo base_url("produk/$lainnya->slug_produk ") ?>">
@@ -231,7 +213,6 @@
 										</div>
 									</div>
 								</div>
-	            <?php } ?>
 					  <?php } ?>
 					</div>
 				</div>

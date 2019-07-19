@@ -250,7 +250,6 @@ class Cart extends CI_Controller {
 		{
 			$qty_new        	= $this->input->post('qty');
 			$subtotaltambah   = $qty_new * $row->harga_diskon;
-
 			$jmlberatlama     = $row->berat;
 			$jmlberattambah   = $jmlberatlama * $qty_new;
 
@@ -258,6 +257,7 @@ class Cart extends CI_Controller {
 				'total_qty'  	=> $this->input->post('qty'),
 				'total_berat' => $jmlberattambah,
 				'subtotal'  	=> $subtotaltambah,
+				'catatan' => $this->input->post('catatan'),
 			);
 
 			$this->Cart_model->update_transdet($id,$data);
@@ -384,11 +384,11 @@ class Cart extends CI_Controller {
 			'status'		=> '4',
 		);
 		$testi = array(
-			'id_user' => $this->input->post('usid'),
-			'id_produk' => $this->input->post('prod'),
-			'nilai' => $this->input->post('rate'),
+			'id_users' => $this->input->post('usid'),
+			'item_id' => $this->input->post('prod'),
+			'rating' => $this->input->post('rate'),
 			'testimoni' => $this->input->post('testi'),
-			'tanggal' => date("Y/m/d"),
+			'date_crate' => date("Y/m/d"),
 		);
 		$this->Cart_model->update($id,$data);
 		$this->Testimoni_model->insertTesti($testi);

@@ -16,6 +16,7 @@ class Produk extends CI_Controller
 		$this->load->model('Kontak_model');
     $this->load->model('Produk_model');
 		$this->load->model('Testimoni_model');
+		$this->load->model('Ion_auth_model');
 
     /* memanggil function dari masing2 model yang akan digunakan */
 		$this->data['blog_data'] 					= $this->Blog_model->get_all_sidebar();
@@ -29,16 +30,18 @@ class Produk extends CI_Controller
 	public function read($id)
 	{
     /* mengambil data berdasarkan id */
+		$this->data['profil'] = $this->Ion_auth_model->profil();
 		$row = $this->Produk_model->get_by_id_front($id);
+		$kat = $row->subkat_id;
 		$prd = $row->id_produk;
     /* melakukan pengecekan data, apabila ada maka akan ditampilkan */
 		if ($row)
     {
       /* memanggil function dari masing2 model yang akan digunakan */
     	$this->data['produk']       	= $this->Produk_model->get_by_id_front($id);
-			$this->data['produk_lainnya']	= $this->Produk_model->get_random();
+			$this->data['produk_lainnya']	= $this->Produk_model->get_random($kat,$prd);
 			$this->data['testi'] = $this->Testimoni_model->testiUser($prd);
-			
+
 			$this->data['title'] = $row->judul_produk;
 
       /* memanggil view yang telah disiapkan dan passing data dari model ke view*/
@@ -66,6 +69,7 @@ class Produk extends CI_Controller
   {
     /* menyiapkan data yang akan disertakan/ ditampilkan pada view */
     $this->data['title'] = "Katalog Produk";
+		$this->data['profil'] = $this->Ion_auth_model->profil();
 
     /* memanggil library pagination (membuat halaman) */
     $this->load->library('pagination');
