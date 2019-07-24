@@ -36,7 +36,11 @@ $(document).ready(function() {
 						"</div>"+
 						'</a>'+
 						"</h5>";
-						for (j = 0; j < Math.round(data[i].rating); j++) {
+						var tmp =  Math.round(data[i].rating);
+						if(tmp>5){
+							tmp = 5;
+						}
+						for (j = 0; j < tmp;j++) {
 							html +=
 								'<i style="color:gold;" class="fa fa-star">'+
 								"</i> ";

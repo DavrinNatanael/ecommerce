@@ -40,11 +40,11 @@
           <li <?php if($this->uri->segment(2) == "produk" && $this->uri->segment(3) == ""){echo "class='active'";} ?>><a href='<?php echo base_url('admin/produk') ?>'><i class='fa fa-circle-o'></i> Data Produk </a></li>
         </ul>
       </li>
-      <li <?php if($this->uri->segment(2) == "recommendation"){echo "class='active'";} ?>>
-        <a href='#'><i class='fa fa-star'></i><span> Recommendation </span><i class='fa fa-angle-left pull-right'></i></a>
+      <li <?php if($this->uri->segment(2) == "promo"){echo "class='active'";} ?>>
+        <a href='#'><i class='fa fa-star'></i><span> promo </span><i class='fa fa-angle-left pull-right'></i></a>
         <ul class='treeview-menu'>
-          <li <?php if($this->uri->segment(2) == "recommendation" && $this->uri->segment(3) == "create"){echo "class='active'";} ?>><a href='<?php echo base_url('admin/recommendation/create') ?>'><i class='fa fa-circle-o'></i> Tambah recommendation </a></li>
-          <li <?php if($this->uri->segment(2) == "recommendation" && $this->uri->segment(3) == ""){echo "class='active'";} ?>><a href='<?php echo base_url('admin/recommendation') ?>'><i class='fa fa-circle-o'></i> Data recommendation </a></li>
+          <li <?php if($this->uri->segment(2) == "promo" && $this->uri->segment(3) == "create"){echo "class='active'";} ?>><a href='<?php echo base_url('admin/recommendation/create') ?>'><i class='fa fa-circle-o'></i> Tambah Promo </a></li>
+          <li <?php if($this->uri->segment(2) == "promo" && $this->uri->segment(3) == ""){echo "class='active'";} ?>><a href='<?php echo base_url('admin/promo') ?>'><i class='fa fa-circle-o'></i> Data Promo </a></li>
         </ul>
       </li>
       <li <?php if($this->uri->segment(2) == "kategori"){echo "class='active'";} ?>>

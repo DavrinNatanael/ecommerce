@@ -48,6 +48,8 @@
          <i class="fa fa-user"></i> Hi, <?php echo $this->session->userdata('username') ?>
       </a>
       <ul>
+        <li><a href="<?php echo base_url('blog/arsip') ?>">Blog</a></li>
+        <li><a href="<?php echo base_url('page/pending/').$lastid->trans_id ?>">Ulasan produk</a></li>
         <li><a href="<?php echo base_url('cart/history/')?>">Riwayat Transaksi</a></li>
         <li><a href="<?php echo base_url('auth/profil') ?>">Profil Saya</a></li>
         <li><a href="<?php echo base_url('auth/edit_profil/').$this->session->userdata('user_id') ?>">Edit Profil</a></li>

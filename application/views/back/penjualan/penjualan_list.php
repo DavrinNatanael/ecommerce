@@ -46,7 +46,11 @@
 													<?php } elseif($penjualan->status == '3'){ ?>
 														<button type="button" name="status" class="btn btn-success">SUDAH DIKIRIM</button>
                           <?php } elseif($penjualan->status == '4'){ ?>
-														<button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+														<button disabled type="button" name="status" class="btn btn-success">MENUNGGU KONFIRMASI BARANG</button>
+                          <?php } elseif($penjualan->status == '5'){?>
+                            <button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+                          <?php } elseif($penjualan->status == '6'){?>
+                            <button disabled type="button" name="status" class="btn btn-danger">TRANSAKSI DIBATALKAN</button>
                           <?php } ?>
 												</td>
 												<td style="text-align:center"><?php echo $penjualan->resi ?></td>

@@ -30,8 +30,9 @@ require_once 'config.php';
 				</table>
 			</div>
       <form action="<?php echo base_url('cart/konfirm/').$history_detail_row->id_trans ?>" method="post">
-				<input type="hidden" name="usid" value="<?php echo $history_detail_row->user_id; ?>">
-				<input type="hidden" name="prod" value="<?php echo $history_detail_row->id_produk; ?>">
+				<!-- <input type="hidden" name="usid" value="<?php echo $history_detail_row->user_id; ?>">
+				<input type="hidden" name="trans" value="<?php echo $history_detail_row->id_trans; ?>">
+				<input type="hidden" name="prod" value="<?php echo $history_detail_row->id_produk; ?>"> -->
         <div class="container">
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">Berikan tanggapan anda untuk produk ini :</label>

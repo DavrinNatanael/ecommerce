@@ -1,7 +1,6 @@
 <hr><h4 align="center">Produk Terbaru</h4><hr>
 <div class="row">
   <?php foreach($produk_new_data as $produk){ ?>
-  <?php if($produk->stok>0){ ?>
     <div class="col-xl-3 col-lg-4 col-md-12 col-sm-6 col-xs-12">
       <div class="card mb-4 box-shadow">
         <a href="<?php echo base_url("produk/$produk->slug_produk ") ?>">
@@ -25,9 +24,10 @@
           </p>
           <p align="center">
             <?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
-                <a href="<?php echo base_url('cart/buy/').$produk->id_produk ?>">
-                  <button onclick="return RefreshWindow();" class="btn btn-primary btn-lg btn-block col-lg-12"><i class="fa fa-shopping-cart"></i> Beli</button>
-                </a>
+              <form class="" action="<?php echo base_url('cart/buy/').$produk->id_produk ?>" method="post">
+                <input type="hidden" name="stokout" value="<?php echo $produk->stok; ?>">
+                <button class="btn btn-primary btn-lg btn-block col-lg-12"><i class="fa fa-shopping-cart"></i> Beli</button>
+              </form>
               <?php } else { ?>
                 <a href="<?php echo base_url('auth/register') ?>">
                   <button onclick="return RefreshWindow();" class="btn btn-primary btn-lg btn-block col-lg-12"><i class="fa fa-shopping-cart"></i> Beli</button>
@@ -37,6 +37,5 @@
         </div>
       </div>
     </div>
-  <?php } ?>
   <?php } ?>
 </div>

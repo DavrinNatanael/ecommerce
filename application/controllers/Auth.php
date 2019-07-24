@@ -14,11 +14,13 @@ class Auth extends CI_Controller {
 		$this->load->model('Kontak_model');
 		$this->load->model('Ion_auth_model');
 		$this->load->model('Wilayah_model');
+		$this->load->model('Testimoni_model');
 
 		$this->data['company_data'] 			= $this->Company_model->get_by_company();
 		$this->data['kategori_data'] 			= $this->Kategori_model->get_all();
 		$this->data['kontak'] 						= $this->Kontak_model->get_all();
 		$this->data['total_cart_navbar'] 	= $this->Cart_model->total_cart_navbar();
+		$this->data['lastid']							= $this->Testimoni_model->get_last_id();
 
 		$this->data['module'] = 'Customer';
 	}
@@ -37,7 +39,7 @@ class Auth extends CI_Controller {
 		$this->data['identity_column'] = $identity_column;
 
 		// validasi form input
-		//$this->form_validation->set_rules('name', 'Nama', 'required|trim|is_unique[users.name]');
+		$this->form_validation->set_rules('name', 'Nama', 'required|trim');
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('phone', 'No. HP', 'trim|numeric');
@@ -80,7 +82,7 @@ class Auth extends CI_Controller {
 			// check to see if we are creating the user | redirect them back to the admin page
 			$this->session->set_flashdata('message', '
 			<div class="col-lg-12">
-				<div class="alert alert-success alert">Registrasi Berhasil. Mohon meunggu akun anda akan segera diaktifkan.</div>
+				<div class="alert alert-success alert">Registrasi Berhasil. Mohon menunggu akun anda akan segera diaktifkan.</div>
 			</div>');
 			redirect(site_url('auth/login'));
 			//redirect(site_url('auth/login'));

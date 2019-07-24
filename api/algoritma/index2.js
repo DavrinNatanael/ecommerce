@@ -1,10 +1,10 @@
 const express = require('express')
 const axios = require('axios')
 var _ = require('underscore-contrib')
-var cors = require('cors')
+// var cors = require('cors')
 const app = express()
 const port = 3000
-app.use(cors())
+// app.use(cors())
 
 
 function id3 (_s,target,features){
@@ -410,7 +410,7 @@ _.each(bisa, function (b){
       _.each(data, function (d) {
         _.each(baranggakada, function (gk) {
           if(d.id_users != user && d.rating == b.rating && d.id_produk == gk.item && b.nilaiRoot == d.id_produk){
-              console.log(d.id_users+">"+d.rating,"=",b.rating+"==",d.id_produk);
+              // console.log(d.id_users+">"+d.rating,"=",b.rating+"==",d.id_produk);
               x = {user: user, tetangga: d.id_users, untuk_item: d.id_produk, allProduct: get_product(d.id_users,data)}
               tetangga.push(x);
           }
@@ -710,7 +710,7 @@ return prediksi;
 
 async function getData() {
   let res = await axios({
-    url:'http://localhost/ecommerce/api/udemy/get_all_rating.php',
+    url:'http://localhost/ecommerce/api/udemy/get_data.php',
     method: 'get',
     timeout: 8000,
     headers: {
@@ -719,7 +719,7 @@ async function getData() {
   })
   if(res.status == 200){
     // test for status you want, etc
-    console.log(res.status)
+    // console.log(res.status)
   }
   // Don't forget to return something
   return res.data
@@ -731,7 +731,7 @@ app.get('/', function(req, res){
     // console.log(req.query.name);
     // res.send('Response send to client::'+req.query.name);
     // var url = 'http://localhost/udemy/get_data_algoritma.php';
-    var url = 'http://localhost/ecommerce/api/udemy/get_data_samplealgo.php';
+    var url = 'http://localhost/ecommerce/api/udemy/get_data.php';
     axios.get(url).then(function (response) {
       var data = response.data;
       var data_ = _(data);
@@ -761,7 +761,7 @@ app.get('/', function(req, res){
           return parseFloat(a.rating)
         }).reverse()
 
-        res.send(sorting);
+        res.send(hasil);
         console.log(hasil);
         // res.send(data_rating);
 

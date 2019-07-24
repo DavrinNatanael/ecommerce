@@ -15,12 +15,12 @@
 
 	    <div class="col-lg-12"><h1>Detail Riwayat Transaksi</h1><hr>
         <h4>Invoice NO. <?php echo $history_detail_row->id_trans ?></h4>
-				<?php if($history_detail_row->status=='2' || $history_detail_row->status=='3' || $history_detail_row->status=='4'){ ?>
+				<?php if($history_detail_row->status=='2' || $history_detail_row->status=='3' || $history_detail_row->status=='4' || $history_detail_row->status=='5'){ ?>
 					<?php echo form_open('cart/download_invoice/'.$history_detail_row->id_trans) ?>
 						<button type="submit" name="download_invoice" class="btn btn-sm btn-success">Download Bukti pembayaran</button>
 					<?php echo form_close() ?>
 					<br>
-		    <?php } elseif($history_detail_row->status=='5'){?>
+		    <?php } elseif($history_detail_row->status=='6'){?>
 					<p class="text-danger">TRANSAKSI DIBATALKAN</p>
 				<?php } else { ?>
 					<div class="col-lg-12">
@@ -54,6 +54,21 @@
 												<tr>
 													<th scope="row">
 														<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" onclick="window.location.href='<?php echo base_url('page/konfirmasi_pembayaran')?>'"><h5><b><i class="fa fa-bank"></i> Transfer bank</b></h5></button>
+													</th>
+												</tr>
+												<tr>
+													<th scope="row">
+														<form class="paypal" action="<?php echo base_url('page/paypal') ?>" method="post" id="paypal_form">
+															<input type="hidden" name="cmd" value="_xclick" />
+															<input type="hidden" name="idtrans" value="Transaksi nomor <?php echo $history_detail_row->id_trans ?>">
+															<input type="hidden" id="code" name="code" value="<?php echo $history_detail_row->id_trans ?>">
+															<?php
+																$_SESSION['kode'] = $history_detail_row->id_trans;
+															?>
+															<input type="hidden" name="test" value="0">
+															<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo ceil(berat($history_detail_row->total_berat)) * $history_detail_row->ongkir + $subtotal_history->subtotal ?>">
+															<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" type="submit" name="submit"><h5><b><i class="fa fa-paypal"></i> Bayar via Paypal</b></h5></button>
+														</form>
 													</th>
 												</tr>
 											</tbody>
@@ -100,9 +115,13 @@
 			                <?php } elseif($history->status == '2'){ ?>
 			                  <span class="text-success">SUDAH DIBAYAR</span>
 			                <?php } elseif($history->status == '3'){ ?>
-												<span class="text-success">SUDAH DIKIRIM</span>
+												<span class="text-success">BARANG SUDAH SAMPAI</span>
 											<?php } elseif($history->status == '4'){ ?>
+												<span class="text-success">MENUNGGU KONFIRMASI PESANAN</span>
+											<?php } elseif($history->status == '5'){?>
 												<span class="text-success">TRANSAKSI SELESAI</span>
+											<?php } elseif($history->status == '6'){?>
+												<span class="text-danger">TRANSAKSI DIBATALKAN</span>
 											<?php } ?>
 										</td>
                   </tr>

@@ -20,7 +20,7 @@
           <div class="col-lg-12">
 						<div class="box box-primary">
               <div class="box-body">
-								<a href="<?php echo base_url('admin/recommendation/create') ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
+								<a href="<?php echo base_url('admin/promo/create') ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
 			          <a href="#" class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> Refresh</a>
 								<hr>
 								<?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
@@ -29,7 +29,11 @@
 										<thead>
 											<tr>
 												<th style="text-align: center">No. Urut</th>
-												<th style="text-align: center">Judul Produk</th>
+												<th style="text-align: center">Kode Promo</th>
+                        <th style="text-align: center">Keterangan</th>
+                        <th style="text-align: center">Diskon</th>
+                        <th style="text-align: center">Max Pembelian</th>
+                        <th style="text-align: center">Max User</th>
 												<th style="text-align: center">Aksi</th>
 											</tr>
 										</thead>
@@ -66,7 +70,7 @@
 
       // Load data for the table's content from an Ajax source
       "ajax": {
-        "url": "<?php echo site_url('admin/recommendation/ajax_list')?>",
+        "url": "<?php echo site_url('admin/promo/ajax_list')?>",
         "type": "POST"
       },
 

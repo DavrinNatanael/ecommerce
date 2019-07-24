@@ -59,6 +59,7 @@ class Cart_model extends CI_Model
   }
 
   // cek transaksi per customer login
+
   function cek_transaksi()
   {
     $this->db->where('user_id', $this->session->userdata('user_id'));
@@ -221,6 +222,12 @@ class Cart_model extends CI_Model
     $this->db->where('produk_id',$id);
     $this->db->where('user', $this->session->userdata('user_id'));
     $this->db->update($this->table2, $data);
+  }
+  function updatecheckout($id, $datatot)
+  {
+    $this->db->where('trans_id',$id);
+    $this->db->where('user', $this->session->userdata('user_id'));
+    $this->db->update($this->table2, $datatot);
   }
 
   // delete data

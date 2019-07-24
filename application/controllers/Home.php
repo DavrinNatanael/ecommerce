@@ -12,6 +12,7 @@ class Home extends CI_Controller {
 		$this->load->model('Kontak_model');
 		$this->load->model('Produk_model');
 		$this->load->model('Slider_model');
+		$this->load->model('Testimoni_model');
 
 		$this->data['title'] 							= 'Home';
 
@@ -21,6 +22,7 @@ class Home extends CI_Controller {
 		$this->data['slider_data'] 				= $this->Slider_model->get_all_home();
 		$this->data['kontak'] 						= $this->Kontak_model->get_all();
 		$this->data['total_cart_navbar'] 	= $this->Cart_model->total_cart_navbar();
+		$this->data['lastid']							= $this->Testimoni_model->get_last_id();
 
 		$this->load->view('front/home/body', $this->data);
 	}

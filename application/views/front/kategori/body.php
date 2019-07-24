@@ -33,7 +33,7 @@
 			      </a>
 						<div class="card-body">
 							<a href="<?php echo base_url("produk/read/$kategori->slug_produk ") ?>">
-								<p class="card-text"><b><?php echo character_limiter($kategori->judul_produk,26) ?></b></p>
+								<p class="card-text"><b><?php echo character_limiter($kategori->judul_produk,25) ?></b></p>
 							</a>
 							<br>
 							<p align="center">

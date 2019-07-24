@@ -16,21 +16,14 @@
       <section class="content">
         <!-- penampilan total record -->
         <div class="row">
-          <div class='col-lg-4'>
+          <div class='col-lg-6'>
             <div class='small-box bg-blue'>
               <div class='inner'><h3> <?php echo $total_transaksi ?> </h3><p><b>PENJUALAN</b></p></div>
               <div class='icon'><i class='fa fa-money'></i></div>
               <a href='<?php echo base_url('admin/penjualan') ?>' class='small-box-footer'>Selengkapnya <i class='fa fa-arrow-circle-right'></i></a>
             </div>
           </div>
-          <div class='col-lg-4'>
-            <div class='small-box bg-red'>
-              <div class='inner'><h3> <?php echo $total_recommendation ?> </h3><p><b>RECOMMENDATION</b></p></div>
-              <div class='icon'><i class='fa fa-star'></i></div>
-              <a href='<?php echo base_url('admin/recommendation') ?>' class='small-box-footer'>Selengkapnya <i class='fa fa-arrow-circle-right'></i></a>
-            </div>
-          </div>
-          <div class='col-lg-4'>
+          <div class='col-lg-6'>
             <div class='small-box bg-orange'>
               <div class='inner'><h3> <?php echo $total_produk ?> </h3><p><b>PRODUK</b></p></div>
               <div class='icon'><i class='fa fa-shopping-cart'></i></div>
@@ -104,7 +97,11 @@
 													<?php } elseif($top5->status == '3'){ ?>
 														<button type="button" name="status" class="btn btn-success">SUDAH DIKIRIM</button>
                           <?php } elseif($top5->status == '4'){ ?>
-														<button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+														<button disabled type="button" name="status" class="btn btn-success">MENUNGGU KONFIRMASI BARANG</button>
+                          <?php } elseif($top5->status == '5'){?>
+                            <button disabled type="button" name="status" class="btn btn-success">TRANSAKSI SELESAI</button>
+                          <?php } elseif($top5->status == '6'){?>
+                            <button disabled type="button" name="status" class="btn btn-danger">TRANSAKSI DIBATALKAN</button>
                           <?php } ?>
                         </td>
                       </tr>

@@ -58,7 +58,11 @@
 			</div>
 			<div class="form-group"><label>Foto Lama</label>
 				<div class="form-group">
-					<img src="<?php echo base_url('assets/images/user/').$user->photo.$user->photo_type ?>" width="200px">
+					<?php if(empty($user->photo)){ ?>
+						<img src="https://image.ibb.co/jw55Ex/def_face.jpg" width="200px">
+					<?php } else{?>
+						<img src="<?php echo base_url('assets/images/user/').$user->photo.$user->photo_type ?>" width="200px">
+					<?php } ?>
 				</div>
 			</div>
 			<div class="form-group"><label>Foto Baru</label>

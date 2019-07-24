@@ -6,30 +6,44 @@ class Page extends CI_Controller {
 	function __construct()
   {
     parent::__construct();
+		$this->load->helper('berat_helper');
 
     /* memanggil model untuk ditampilkan pada masing2 modul */
 		$this->load->model('Blog_model');
 		$this->load->model('Cart_model');
     $this->load->model('Company_model');
-		$this->load->model('recommendation_model');
 		$this->load->model('Kategori_model');
 		$this->load->model('Kontak_model');
     $this->load->model('Produk_model');
+		$this->load->model('Ion_auth_model');
+		$this->load->model('Testimoni_model');
 
     /* memanggil function dari masing2 model yang akan digunakan */
     $this->data['blog_data'] 					= $this->Blog_model->get_all_sidebar();
     $this->data['company_data'] 			= $this->Company_model->get_by_company();
-    $this->data['recommendation_data']= $this->recommendation_model->get_all_front();
     $this->data['kategori_data'] 			= $this->Kategori_model->get_all();
 		$this->data['kontak'] 						= $this->Kontak_model->get_all();
 		$this->data['total_cart_navbar'] 	= $this->Cart_model->total_cart_navbar();
+		$this->data['profil'] = $this->Ion_auth_model->profil();
 		$this->data['itemName'] = $this->input->post('itemName');
 		$this->data['itemNumber'] = "PN12345";
 		$this->data['itemPrice'] = $this->input->post('bayartotal');
 		$this->data['idtrans'] = $this->input->post('idtrans');
 		$this->data['code'] = $this->input->post('code');
 		$this->data['currency'] = "IDR";
+		$this->data['lastid']							= $this->Testimoni_model->get_last_id();
   }
+
+	public function pending($id){
+		$this->data['title'] 							= 'Ulasan produk';
+		$this->data['pending']						= $this->Testimoni_model->testiPending($id);
+		$this->load->view('front/page/testipage',$this->data);
+
+	}
+
+	public function success(){
+		$this->load->view('front/cart/payment-successful',$this->data);
+	}
 
 	public function company()
 	{
@@ -57,22 +71,49 @@ class Page extends CI_Controller {
 		$this->data['title'] 							= 'Konfirmasi Pembayaran';
 		$this->load->view('front/page/bayarcc', $this->data);
 	}
+	public function paypal()
+	{
+		// $tr = $this->input->post('code');
+		// $data = array(
+		// 	'status'		=> '2',
+		// );
+		//
+		// $this->Cart_model->bayar($tr,$data);
+		$this->load->view('front/cart/payments');
+	}
+
+	public function arrived($id_trans){
+		$this->data['title'] 								= 'Detail Riwayat Transaksi';
+		$data = array(
+			'status'		=> '4',
+		);
+		$this->Cart_model->update($id_trans,$data);
+		$this->data['history_detail']	    	= $this->Cart_model->history_detail($id_trans)->result();
+		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id_trans)->row();
+		$this->data['history_total_berat'] 	= $this->Cart_model->history_total_berat($id_trans);
+		$this->data['subtotal_history'] 		= $this->Cart_model->subtotal_history($id_trans);
+
+		$this->load->view('front/cart/history_detail', $this->data);
+	}
 
 	public function testimoni($id)
 	{
-		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id)->row();
 		$this->data['title'] 							= 'Testimoni';
-		$this->load->view('front/page/testimoni', $this->data);
+		$data = array(
+			'status'		=> '5',
+		);
+		$this->Cart_model->update($id,$data);
+		$this->data['pending']						= $this->Testimoni_model->testiPending($id);
+		$this->load->view('front/page/testipage',$this->data);
 	}
 
 	public function payment($id_trans)
 	{
-
-		$data = array(
-			'status'		=> '2',
-		);
-
-		$this->Cart_model->bayar($id_trans,$data);
+		// $data = array(
+		// 	'status'		=> '2',
+		// );
+		//
+		// $this->Cart_model->update($id_trans,$data);
 		$this->data['title'] 							= 'Konfirmasi Pembayaran';
 
 		$this->data['cart_finished']	    			= $this->Cart_model->get_cart_per_customer_finished($id_trans);

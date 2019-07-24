@@ -5,8 +5,16 @@ class Produk_model extends CI_Model
   public $table = 'produk';
   public $id    = 'id_produk';
   public $order = 'DESC';
-
-  var $column = array('id_produk','judul_produk','kat_id','subkat_id','harga');
+  // 
+  // function get_stok(){
+  //   $this->db->where('id_produk',1);
+  //   return $this->db->get($this->table)->row();
+  // }
+  function update_stok($stok,$id){
+    $this->db->where('id_produk',$id);
+    $this->db->update($this->table,$stok);
+  }
+  var $column = array('id_produk','judul_produk','kat_id','subkat_id','harga_diskon','harga_normal');
 
   private function _get_datatables_query()
   {

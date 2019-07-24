@@ -1,4 +1,5 @@
 <?php $this->load->view('front/header'); ?>
+<?php error_reporting(0); ?>
 <?php $this->load->view('front/navbar'); ?>
 
 <div class="container">
@@ -16,8 +17,36 @@
 			<div class="row">
 			  <div class="col-lg-12">
 					<?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-
           <div class="box-body table-responsive padding">
+						<?php if(!empty($cart_data)){?>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+							  Gunakan Kode Promo
+							</button>
+							<br>
+						<?php } ?>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+									<form class="" action="<?php echo base_url('cart/cek_promo/')?>" method="post">
+										<input type="hidden" name="total1" value="<?php echo $total_berat_dan_subtotal->subtotal ?>"/>
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Gunakan kode promo</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        <input name="kode" type="text" class="form-control" placeholder="Masukkan kode promo" aria-label="Username" aria-describedby="basic-addon1">
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							        <button type="submit" class="btn btn-primary">Gunakan</button>
+							      </div>
+									</form>
+						    </div>
+						  </div>
+						</div>
 						<br>
             <table id="datatable" class="table table-striped table-bordered">
               <thead>
@@ -43,6 +72,8 @@
 									<form action="<?php echo base_url('cart/update/').$cart->produk_id ?>" method="post">
 									<td style="text-align:center">
 										<input type="hidden" name="produk_id" value="<?php echo $cart->produk_id ?>">
+										<input type="hidden" name="stok" value="<?php echo $cart->stok; ?>">
+										<input type="hidden" id="qtyholder<?php echo $no-1 ?>" name="qtyholder" value="">
 										<input id="qty<?php echo $no-1 ?>" type="number" name="qty" class="form-control" style="width:50px;" name="produk_id" value="<?php echo $cart->total_qty ?>" min="1" max="9">
 									</td>
                   <td id="berat<?php echo $no-1 ?>" style="text-align:center">
@@ -105,6 +136,23 @@
 								</div>
 							</td>
 							<td align="right"><font id="totalongkir"></font></td>
+				    </tr>
+						<tr>
+				      <th scope="row">Promo</th>
+							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian) {?>
+				      	<td align="right">Promo <?php echo $promo->discount; ?>% dari SubTotal</td>
+							<?php }else{ ?>
+								<td align="right">Tidak ada promo yang digunakan</td>
+							<?php } ?>
+							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian) {?>
+					      <td align="right">
+									<b><div id="promohtml"> <input type="hidden" id="promoin" name="promoin" value="<?php echo ($total_berat_dan_subtotal->subtotal * $promo->discount)/100 ?>"><?php echo ($total_berat_dan_subtotal->subtotal * $promo->discount)/100 ?></div></b>
+								</td>
+							<?php }else{ ?>
+								<td align="right">
+									<b><div id="promohtml">0</div></b>
+								</td>
+							<?php } ?>
 				    </tr>
 						<tr>
 				      <th scope="row">Grand Total</th>
@@ -173,7 +221,13 @@
 						</div>
 					</div>
 					<input type="hidden" name="id_trans" value="<?php echo $customer_data->id_trans ?>">
-					<input type="hidden" name="total" id="total" value="<?php echo $total_berat_dan_subtotal->subtotal ?>"/>
+					<input type="hidden" name="kodepromo" value="<?php echo $promo->id_promo ?>">
+					<input type="" name="nuke" value="<?php $nuke ?>">
+					<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian){ ?>
+						<input type="hidden" name="total" id="total" value="<?php echo $total_berat_dan_subtotal->subtotal - ($total_berat_dan_subtotal->subtotal * $promo->discount)/100?>"/>
+					<?php }else{ ?>
+						<input type="hidden" name="total" id="total" value="<?php echo $total_berat_dan_subtotal->subtotal ?>"/>
+					<?php } ?>
 					<input type="hidden" name="ongkir" id="ongkir" value="0"/>
 				<?php } ?>
 			<?php echo form_close() ?>
@@ -188,12 +242,13 @@
 				var refresh = document.getElementById("refresh");
 				<?php for ($i=1; $i < $no; $i++) { ?>
 					var qty<?php echo $i ?> = document.getElementById("qty<?php echo $i ?>");
+					var qtyholder<?php echo $i ?> = document.getElementById("qtyholder<?php echo $i ?>");
 					var berat<?php echo $i ?> = document.getElementById("berat<?php echo $i ?>");
 					var harga<?php echo $i ?> = document.getElementById("harga<?php echo $i ?>");
 					var berathi<?php echo $i ?> = document.getElementById("berathi<?php echo $i ?>");
 					var hargahi<?php echo $i ?> = document.getElementById("hargahi<?php echo $i ?>");
 					qty<?php echo $i ?>.addEventListener("click", total<?php echo $i ?>);
-
+					qtyholder<?php echo $i ?>.value = qty<?php echo $i ?>.value
 					function total<?php echo $i ?>(){
 						berat<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * berathi<?php echo $i ?>.value;
 						harga<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * hargahi<?php echo $i ?>.value;
@@ -232,7 +287,7 @@
 			var total=$('#total').val();
 			var ongkir=$("#ongkir").val();
 			var totalongkir= ongkir;
-			var bayar=(parseFloat(total)+parseFloat(totalongkir));
+			var bayar=(parseFloat(total)+parseFloat(ongkir));
 			if(parseFloat(ongkir) > 0)
 			{
 				$("#oksimpan").show();

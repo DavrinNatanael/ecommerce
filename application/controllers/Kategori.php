@@ -10,19 +10,20 @@ class Kategori extends CI_Controller {
 		$this->load->model('Blog_model');
     $this->load->model('Cart_model');
 		$this->load->model('Company_model');
-    $this->load->model('recommendation_model');
 		$this->load->model('Kategori_model');
     $this->load->model('Kontak_model');
 		$this->load->model('Produk_model');
     $this->load->model('Ion_auth_model');
+    $this->load->model('Testimoni_model');
 
 		$this->data['company_data'] 			= $this->Company_model->get_by_company();
 		$this->data['blog_data'] 					= $this->Blog_model->get_all_sidebar();
-		$this->data['recommendation_data'] 			= $this->recommendation_model->get_all_front();
 		$this->data['kategori_data'] 			= $this->Kategori_model->get_all();
 		$this->data['kontak'] 						= $this->Kontak_model->get_all();
     $this->data['total_cart_navbar'] 	= $this->Cart_model->total_cart_navbar();
     $this->data['profil'] = $this->Ion_auth_model->profil();
+    $this->data['lastid']							= $this->Testimoni_model->get_last_id();
+
 	}
 
   private $limit = 9;

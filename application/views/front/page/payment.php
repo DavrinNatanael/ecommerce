@@ -8,6 +8,7 @@ $ordStatus = 'error';
 // Check whether stripe token is not empty
 if(!empty($_POST['stripeToken'])){
     // Retrieve stripe token, card and user info from the submitted form data
+    $code = $_POST['id_trans'];
     $token  = $_POST['stripeToken'];
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -65,10 +66,13 @@ if(!empty($_POST['stripeToken'])){
         <?php
         $sql = "INSERT INTO orders(name,email,card_number,card_exp_month,card_exp_year,item_name,item_number,item_price,item_price_currency,paid_amount,paid_amount_currency,txn_id,payment_status,created,modified) VALUES('".$name."','".$email."','".$card_number."','".$card_exp_month."','".$card_exp_year."','".$itemName."','".$itemNumber."','".$itemPrice."','".$currency."','".$paidAmount."','".$paidCurrency."','".$transactionID."','".$payment_status."',NOW(),NOW())";
         $insert = $db->query($sql);
+
         $payment_id = $db->insert_id;
 
         // If the order is successful
         if($payment_status == 'succeeded'){
+            $sqlstat = "UPDATE transaksi set status='2' where id_trans='$code'";
+            $insertstat = $db->query($sqlstat);
             $ordStatus = 'success';
             $statusMsg = 'Your Payment has been Successful!';
         }else{

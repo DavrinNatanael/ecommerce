@@ -68,6 +68,7 @@
 						if($produk->stok > 0){ ?>
 						<form action="<?php echo base_url('cart/buy2/').$produk->id_produk ?>" method="post">
 							<input type="hidden" name="counthi" id="counthi">
+							<input type="hidden" name="stok" value="<?php echo $produk->stok; ?>">
 							<input id="catatanhi" class="form-control mr-md-2" type="hidden" name="catatanhi">
 						<a href="<?php echo base_url('cart/buy2/').$produk->id_produk ?>">
 							<button id="beli" type="submit" class="btn btn-primary btn-lg btn-block col-lg-12">Beli</button>
@@ -172,7 +173,7 @@
 																	<?php } ?>
 						        	       </p>
 						        	       <div class="clearfix"></div>
-														 <p><?php echo $testimoni->testimoni; ?></p>
+														 <p><?php echo $testimoni->testi; ?></p>
 						        	    </div>
 							        </div>
 								    </div>

@@ -43,6 +43,7 @@
 										<th scope="row">
 											<form action="<?php echo base_url('page/bayarcc/').$customer_data->id_trans ?>" method="post">
 												<input type="hidden" name="code" value="1">
+												<input type="hidden" name="itemName" value="Transaksi <?php echo $customer_data->id_trans; ?>">
 												<input type="hidden" name="id_trans" value="<?php echo $customer_data->id_trans ?>">
 												<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo $customer_data->ongkir + $total_berat_dan_subtotal->subtotal ?>">
 												<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" type="submit"><h5><b><i class="fa fa-credit-card"></i> Kartu Kredit / Debit</b></h5></button>
@@ -52,6 +53,21 @@
 									<tr>
 										<th scope="row">
 											<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" onclick="window.location.href='<?php echo base_url('page/konfirmasi_pembayaran')?>'"><h5><b><i class="fa fa-bank"></i> Transfer bank</b></h5></button>
+										</th>
+									</tr>
+									<tr>
+										<th scope="row">
+											<form class="paypal" action="<?php echo base_url('page/paypal') ?>" method="post" id="paypal_form">
+												<input type="hidden" name="cmd" value="_xclick" />
+												<input type="hidden" name="idtrans" value="Transaksi nomor <?php echo $customer_data->id_trans ?>">
+												<input type="hidden" id="code" name="code" value="<?php echo $customer_data->id_trans ?>">
+												<?php
+													$_SESSION['kode'] = $customer_data->id_trans;
+												?>
+												<input type="hidden" name="test" value="0">
+												<input type="hidden" name="bayartotal" id="bayartotal" value="<?php echo $customer_data->ongkir + $total_berat_dan_subtotal->subtotal ?>">
+												<button style="background-color:transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;" type="submit" name="submit"><h5><b><i class="fa fa-paypal"></i> Bayar via Paypal</b></h5></button>
+											</form>
 										</th>
 									</tr>
 								</tbody>

@@ -7,7 +7,6 @@ class Dashboard extends CI_Controller {
 	{
 		$this->load->model('Blog_model');
 		$this->load->model('Cart_model');
-		$this->load->model('recommendation_model');
 		$this->load->model('Ion_auth_model');
 		$this->load->model('Kontak_model');
 		$this->load->model('Produk_model');
@@ -23,7 +22,6 @@ class Dashboard extends CI_Controller {
 				'get_bulan' 							=> $this->Cart_model->get_bulan(),
 				'total_transaksi' 				=> $this->Cart_model->total_rows(),
 				'top5_transaksi' 					=> $this->Cart_model->top5_transaksi(),
-				'total_recommendation' 		=> $this->recommendation_model->total_rows(),
 				'total_produk' 						=> $this->Produk_model->total_rows(),
 				'total_slider' 						=> $this->Slider_model->total_rows(),
 			);
