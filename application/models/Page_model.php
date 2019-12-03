@@ -2,22 +2,48 @@
 
 class Page_model extends CI_Model
 {
-  public $table = 'page';
-  public $id    = 'id_page';
+  public $table = 'komplain';
+  public $table2 = 'transaksi_detail';
+  public $table3 = 'transaksi';
+  public $table4 = 'promo';
 
-  function get_by_id($id)
-  {
-    $this->db->where('judul_seo', $id);
+  public function insertKomplain($datakomplain){
+    $this->db->insert($this->table, $datakomplain);
+  }
+
+  public function getComplainLIst($id){
+    // $this->db->join('komplain','transaksi_detail.id_transdet = komplain.transdet_id');
+    // $this->db->join('produk','transaksi_detail.produk_id = produk.id_produk');
+    $this->db->where('user',$id);
+    return $this->db->get($this->table)->result();
+  }
+
+  public function getkomplainstatus($trans){
+    $this->db->where('transid',$trans);
     return $this->db->get($this->table)->row();
   }
 
-  // update data
-  function update($id, $data)
-  {
-    $this->db->where($this->id,$id);
-    $this->db->update($this->table, $data);
+  public function getPromoList(){
+    return $this->db->get($this->table4)->result();
   }
 
+  public function komplainstatus($data,$trs){
+    $this->db->where('id_trans',$trs);
+    $this->db->update($this->table3,$data);
+  }
+
+  public function komplusr($data,$trs){
+    $this->db->where('transid',$trs);
+    $this->db->update($this->table,$data);
+  }
+
+  public function penukaranInsert($datapenukaran){
+    $this->db->insert($this->table3,$datapenukaran);
+  }
+  function updatekomplain($id,$status){
+    $this->db->where('id_komplain',$id);
+    $this->db->update($this->table,$status);
+  }
 }
 
 /* End of file Komentar_model.php */

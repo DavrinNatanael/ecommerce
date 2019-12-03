@@ -11,6 +11,11 @@
 
     <ul class="sidebar-menu">
       <li class="header">MENU UTAMA</li>
+      <li <?php if($this->uri->segment(2)=="testing"){echo "class='active'";} ?>>
+        <a href="<?php echo base_url('admin/testing') ?>">
+          <i class="fa fa-code"></i> <span>Testing</span>
+        </a>
+      </li>
       <li <?php if($this->uri->segment(2)=="dashboard"){echo "class='active'";} ?>>
         <a href="<?php echo base_url('admin/dashboard') ?>">
           <i class="fa fa-home"></i> <span>Dashboard</span>
@@ -24,6 +29,11 @@
       <li <?php if($this->uri->segment(2)=="penjualan"){echo "class='active'";} ?>>
         <a href="<?php echo base_url('admin/penjualan') ?>">
           <i class="fa fa-money"></i> <span>Penjualan</span>
+        </a>
+      </li>
+      <li <?php if($this->uri->segment(2)=="komplain"){echo "class='active'";} ?>>
+        <a href="<?php echo base_url('admin/komplain/') ?>">
+          <i class="fa fa-comments"></i> <span>komplain</span>
         </a>
       </li>
       <li <?php if($this->uri->segment(2) == "blog"){echo "class='active'";} ?>>
@@ -43,7 +53,7 @@
       <li <?php if($this->uri->segment(2) == "promo"){echo "class='active'";} ?>>
         <a href='#'><i class='fa fa-star'></i><span> promo </span><i class='fa fa-angle-left pull-right'></i></a>
         <ul class='treeview-menu'>
-          <li <?php if($this->uri->segment(2) == "promo" && $this->uri->segment(3) == "create"){echo "class='active'";} ?>><a href='<?php echo base_url('admin/recommendation/create') ?>'><i class='fa fa-circle-o'></i> Tambah Promo </a></li>
+          <li <?php if($this->uri->segment(2) == "promo" && $this->uri->segment(3) == "create"){echo "class='active'";} ?>><a href='<?php echo base_url('admin/promo/create') ?>'><i class='fa fa-circle-o'></i> Tambah Promo </a></li>
           <li <?php if($this->uri->segment(2) == "promo" && $this->uri->segment(3) == ""){echo "class='active'";} ?>><a href='<?php echo base_url('admin/promo') ?>'><i class='fa fa-circle-o'></i> Data Promo </a></li>
         </ul>
       </li>

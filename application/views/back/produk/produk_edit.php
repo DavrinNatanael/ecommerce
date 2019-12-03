@@ -33,21 +33,21 @@
 										<?php echo form_textarea($deskripsi, $produk->deskripsi);?>
 									</div>
                   <div class="row">
-                    <div class="col-lg-4"><label>Harga Normal</label>
+                    <div class="col-lg-4"><label>Harga Normal(Rp)</label>
 											<?php echo form_input($harga_normal, $produk->harga_normal);?><br>
 										</div>
 										<div class="col-lg-4"><label>Diskon (%)</label>
 											<?php echo form_input($diskon, $produk->diskon);?><br>
 										</div>
-										<div class="col-lg-4"><label>Harga Diskon</label>
+										<div class="col-lg-4"><label>Harga Diskon(Rp)</label>
 											<?php echo form_input($harga_diskon, $produk->harga_diskon);?><br>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-lg-6"><label>Stok</label>
+										<div class="col-lg-6"><label>Stok(Qty)</label>
 											<?php echo form_input($stok, $produk->stok);?><br>
 										</div>
-										<div class="col-lg-6"><label>Berat</label>
+										<div class="col-lg-6"><label>Berat(gr)</label>
 											<?php echo form_input($berat, $produk->berat);?><br>
 										</div>
 									</div>

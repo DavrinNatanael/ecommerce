@@ -57,14 +57,14 @@ class Cart extends CI_Controller {
 		$this->data['promo']							= $this->Promo_model->get_promo($kode);
 		$this->data['promocek']							= $this->Promo_model->userPromoCheck($kode);
 		$total = $this->input->post('total1');
-		$tmp = $this->Promo_model->userPromoCheck($kode);
+		$tmp = $this->Promo_model->get_promo($kode);
 
-		if(empty($this->Promo_model->get_promo($kode)) || !empty($this->Promo_model->get_promo($kode)) && $total>$tmp->max_pembelian || $kode==$tmp->kode_promo) {
+		if($total < $tmp->max_pembelian || empty($this->Promo_model->get_promo($kode)) || !empty($this->Promo_model->userPromoCheck($kode)) || $tmp->max_users==0) {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger alert">Promo tidak tersedia atau anda sudah menggunakannya sebelumnya atau total belanja anda tidak memenuhi syarat</div>');
 			$nuke = 0;
 			$this->load->view('front/cart/body', $this->data,$nuke);
 		}
-		else {
+		else{
 			$nuke = 1;
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert">Promo tersedia dan dapat digunakan</div>');
 			$this->load->view('front/cart/body', $this->data,$nuke);
@@ -134,7 +134,7 @@ class Cart extends CI_Controller {
 							'total_qty'  	=> $this->input->post('counthi'),
 							'total_berat' => $row->berat*$this->input->post('counthi'),
 							'subtotal'  	=> $row->harga_diskon*$this->input->post('counthi'),
-							'catatan'     => $this->input->post('catatanhi'),
+							'catatan'     => $this->input->post('catatan'),
 						);
 						$this->Cart_model->insert_detail($data2);
 						// set pesan data berhasil dibuat
@@ -167,7 +167,7 @@ class Cart extends CI_Controller {
 						'total_qty'  	=> $this->input->post('counthi'),
 						'total_berat' => $row->berat*$this->input->post('counthi'),
 						'subtotal'  	=> $row->harga_diskon*$this->input->post('counthi'),
-						'catatan'     => $this->input->post('catatanhi'),
+						'catatan'     => $this->input->post('catatan'),
 					);
 
 					$this->Cart_model->insert_detail($data2);
@@ -352,7 +352,17 @@ class Cart extends CI_Controller {
 				// set pesan data berhasil dibuat
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert">Berhasil Update Keranjang</div>');
 				redirect(site_url('cart'));
-			}else if($this->input->post('qty')<$this->input->post('qtyholder') && $this->input->post('stok')==0){
+			}else if($this->input->post('qty')>$this->input->post('qtyholder') && $this->input->post('stok')==0){
+
+				// set pesan data berhasil dibuat
+				$this->session->set_flashdata('message', '<div class="alert alert-warning alert">Quantity barang melebihi stok yang tersedia</div>');
+				redirect(site_url('cart'));
+			}
+			else if ($this->input->post('qty')>$this->input->post('stok') && $this->input->post('qty')<$this->input->post('stok')) {
+				$this->session->set_flashdata('message', '<div class="alert alert-warning alert">Quantity barang melebihi stok yang tersedia</div>');
+				redirect(site_url('cart'));
+			}
+			else if($this->input->post('qty')>$this->input->post('stok')){
 				$stok = array(
 					'stok'  	=> $this->input->post('stok')+($this->input->post('qtyholder')-$this->input->post('qty')),
 				);
@@ -375,10 +385,11 @@ class Cart extends CI_Controller {
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert">Berhasil Update Keranjang</div>');
 				redirect(site_url('cart'));
 			}
-			elseif ($this->input->post('qty')>$this->input->post('stok')) {
-				$this->session->set_flashdata('message', '<div class="alert alert-warning alert">Quantity barang melebihi stok yang tersedia</div>');
-				redirect(site_url('cart'));
-			}
+			$data = array(
+				'catatan' => $this->input->post('catatan'),
+			);
+
+			$this->Cart_model->update_transdet($id,$data);
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert">Berhasil Update Keranjang</div>');
 			redirect(site_url('cart'));
 		}
@@ -420,6 +431,8 @@ class Cart extends CI_Controller {
 
 	public function checkout()
 	{
+		$promoid 			= $this->Cart_model->get_by_id($id);
+
 		$this->data['title'] 							= 'Transaksi Selesai';
 
 		$id_trans = $this->input->post('id_trans');
@@ -436,23 +449,36 @@ class Cart extends CI_Controller {
 		);
 		$this->Promo_model->inserPromoDet($promdet);
 
+		$kodenuklir2 = $this->input->post('kodenuklir2');
+
+		$nuklir = $this->input->post('kodenuklir');
+
+		$promuser = array(
+			'max_users' => $kodenuklir2-1,
+		);
+		$this->Promo_model->kuranguser($nuklir,$promuser);
+
 		$data = array(
 			'kurir'  		=> $this->input->post('kurir'),
 			'ongkir' 		=> $this->input->post('ongkir'),
 			'service'  	=> $this->input->post('service'),
 			'status'		=> '1',
 		);
-
 		$this->Cart_model->checkout($id_trans,$data);
+		$eventdate = $this->input->post('eventdate');
+		require_once 'config.php';
+		include_once 'dbConnect.php';
+		$sqlstat = "CREATE EVENT `$id_trans delete` ON SCHEDULE AT '$eventdate 23:59:59.000000' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `transaksi` SET `status` = '6' WHERE `status` = '1' AND `id_trans` = $id_trans";
+		$insertstat = $db->query($sqlstat);
 
 		$this->data['cart_finished']	    			= $this->Cart_model->get_cart_per_customer_finished($id_trans);
 		$this->data['customer_data'] 						= $this->Cart_model->get_data_customer();
 		$this->data['total_berat_dan_subtotal'] = $this->Cart_model->get_total_berat_dan_subtotal_finished($id_trans);
 		$this->data['data_bank'] 								= $this->Bank_model->get_all();
 
-
-		$this->load->view('front/cart/finished', $this->data);
-
+		redirect(site_url('cart/history'));
+		// $this->load->view('front/cart/finished', $this->data);
+		die();
 	}
 
 	public function download_invoice($id)
@@ -506,6 +532,10 @@ class Cart extends CI_Controller {
 		$this->data['history_detail_row']		= $this->Cart_model->history_detail($id)->row();
 		$this->data['history_total_berat'] 	= $this->Cart_model->history_total_berat($id);
 		$this->data['subtotal_history'] 		= $this->Cart_model->subtotal_history($id);
+		$this->data['cart_finished']	    			= $this->Cart_model->get_cart_per_customer_finished($id_trans);
+		$this->data['customer_data'] 						= $this->Cart_model->get_data_customer();
+		$this->data['total_berat_dan_subtotal'] = $this->Cart_model->get_total_berat_dan_subtotal_finished($id_trans);
+		$this->data['data_bank'] 								= $this->Bank_model->get_all();
 
 		$this->load->view('front/cart/history_detail', $this->data);
 	}

@@ -144,7 +144,7 @@ class Slider extends CI_Controller
               'no_urut'       => $this->input->post('no_urut'),
               'judul_slider'  => $this->input->post('judul_slider'),
               'link'          => $this->input->post('link'),
-              'foto'          => $nmfile,
+              'fotoa'          => $nmfile,
               'foto_type'     => $foto['file_ext'],
               'created_by'      => $this->session->userdata('username')
             );

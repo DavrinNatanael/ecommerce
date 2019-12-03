@@ -34,21 +34,21 @@
 									</div>
                   <div class="row">
                     <input class="form-control" name="hd" type="hidden" id="c" size="30" onkeyup="hitung();" readonly/>
-										<div class="col-lg-4"><label>Harga Normal</label>
+										<div class="col-lg-4"><label>Harga Normal(Rp)</label>
 											<?php echo form_input($harga_normal);?><br>
 										</div>
 										<div class="col-lg-4"><label>Diskon (%)</label>
 											<?php echo form_input($diskon);?><br>
 										</div>
-										<div class="col-lg-4"><label>Harga Diskon</label>
+										<div class="col-lg-4"><label>Harga Diskon(Rp)</label>
 											<?php echo form_input($harga_diskon);?><br>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-lg-6"><label>Stok</label>
+										<div class="col-lg-6"><label>Stok(Qty)</label>
 											<?php echo form_input($stok);?><br>
 										</div>
-										<div class="col-lg-6"><label>Berat</label>
+										<div class="col-lg-6"><label>Berat(gr)</label>
 											<?php echo form_input($berat);?><br>
 										</div>
 									</div>
@@ -151,11 +151,11 @@
 	{
 		kat_id = document.getElementById("kat_id").value;
 		$.ajax({
-			url:"<?php echo base_url();?>admin/produk/pilih_subkategori/"+kat_id+"",
-			success: function(response){
-				$("#subkat_id").html(response);
-			},
-			dataType:"html"
+		url:"<?php echo base_url();?>produk/pilih_subkategori/"+kat_id+"",
+		success: function(response){
+			$("#subkat_id").html(response);
+		},
+		dataType:"html"
 		});
 		return false;
 	}

@@ -31,9 +31,9 @@
 												<th style="text-align: center">No. Urut</th>
 												<th style="text-align: center">Kode Promo</th>
                         <th style="text-align: center">Keterangan</th>
-                        <th style="text-align: center">Diskon</th>
-                        <th style="text-align: center">Max Pembelian</th>
-                        <th style="text-align: center">Max User</th>
+                        <th style="text-align: center">Diskon(%)</th>
+                        <th style="text-align: center">Min Pembelian(Rp)</th>
+                        <th style="text-align: center">Max Users(Kuota Umum)</th>
 												<th style="text-align: center">Aksi</th>
 											</tr>
 										</thead>
@@ -70,7 +70,7 @@
 
       // Load data for the table's content from an Ajax source
       "ajax": {
-        "url": "<?php echo site_url('admin/promo/ajax_list')?>",
+        "url": "<?php echo base_url('admin/promo/ajax_list')?>",
         "type": "POST"
       },
 

@@ -16,9 +16,11 @@
           <br>
           <p align="center">
             <?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
+              <b>Sisa stok : <?php echo $produk->stok; ?></b><br>
               <strike><b>Rp <?php echo number_format($produk->harga_normal) ?></b></strike><br>
               <b>Rp <?php echo number_format($produk->harga_diskon) ?></b> <font style="font-size:15px"><span class="badge badge-pill badge-primary"><?php echo $produk->diskon ?>% OFF</span></font>
             <?php } else { ?>
+              <b>Sisa stok : <?php echo $produk->stok; ?></b><br>
               <b>Rp <?php echo number_format($produk->harga_normal) ?></b>
             <?php } ?>
           </p>

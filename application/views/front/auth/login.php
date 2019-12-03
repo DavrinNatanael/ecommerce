@@ -29,9 +29,11 @@
 							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						<p><?php echo $captcha ?></p>
-						<?php echo lang('login_remember_label', 'remember');?>
-						<?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?> | <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#pswreset">Lupa Password?</button>
+						<!-- <?php echo lang('login_remember_label', 'remember');?> -->
+						<!-- <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?> |  -->
+						<button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#pswreset">Lupa Password?</button>
 						<div class="form-group">
+							<br>
 							<button type="submit" name="submit" class="btn btn-primary">Login</button>
 							<button type="reset" name="reset" class="btn btn-danger">Reset</button>
 						</div>
@@ -51,17 +53,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-			<?php echo form_open("auth/forgot_password");?>
-      <div class="modal-body">
-				<div class="form-group"><label>Silahkan Masukkan Username Anda</label>
-					<input class="form-control" name="identity" type="text" id="identity" />
-				</div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Kirim</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-			<?php echo form_close() ?>
+			<!-- <form class="" action="http://localhost/udemy/lupabydavrin.php" method="GET"> -->
+			<form class="" action="<?php echo base_url('auth/lupa_password/'); ?>" method="GET">
+	      <div class="modal-body">
+					<div class="form-group"><label>Silahkan Masukkan Email</label>
+						<input class="form-control" name="email" type="email" id="email" />
+					</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-primary">Kirim</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+			</form>
     </div>
   </div>
 </div>

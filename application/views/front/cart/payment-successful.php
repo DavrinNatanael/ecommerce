@@ -7,5 +7,5 @@
   $kode_value = $_SESSION['kode'];
   $sqlstat = "UPDATE transaksi set status='2' where id_trans='$kode_value'";
   $insertstat = $db->query($sqlstat);
-  header('Refresh: 3; URL=http://localhost/ecommerce/cart/history');
+  header('Refresh: 1; URL=http://localhost/ecommerce/cart/history');
   die();

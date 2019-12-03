@@ -5,7 +5,7 @@ class Produk_model extends CI_Model
   public $table = 'produk';
   public $id    = 'id_produk';
   public $order = 'DESC';
-  // 
+  //
   // function get_stok(){
   //   $this->db->where('id_produk',1);
   //   return $this->db->get($this->table)->row();

@@ -23,6 +23,14 @@
 								<?php echo form_open('admin/penjualan/update_action') ?>
 									<div class="form-group"><label>No. Resi</label>
 										<?php echo form_input($resi,$penjualan->resi);?>
+                    <?php
+                    $timestamp = time()-86400;
+                    $date = strtotime("+7 day", $timestamp);
+                    $date2 = strtotime("+14 day", $timestamp);
+                    ?>
+                    <input type="hidden" name="useridentity" value="<?php echo $penjualan->user_id; ?>">
+                    <input type="hidden" name="eventdate" value="<?php echo date('Y-m-d', $date); ?>">
+                    <input type="hidden" name="eventdate2" value="<?php echo date('Y-m-d', $date2); ?>">
 									</div>
 									<?php echo form_input($id_trans,$penjualan->id_trans);?>
 									<button type="submit" name="submit" class="btn btn-primary">Submit</button>

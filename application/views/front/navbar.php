@@ -49,6 +49,8 @@
       </a>
       <ul>
         <li><a href="<?php echo base_url('blog/arsip') ?>">Blog</a></li>
+        <li><a href="<?php echo base_url('page/promopage/'); ?>">Lihat Promo</a></li>
+        <li><a href="<?php echo base_url('page/halamanKomplain/').$this->session->userdata('user_id'); ?>">Halaman Komplain</a></li>
         <li><a href="<?php echo base_url('page/pending/').$lastid->trans_id ?>">Ulasan produk</a></li>
         <li><a href="<?php echo base_url('cart/history/')?>">Riwayat Transaksi</a></li>
         <li><a href="<?php echo base_url('auth/profil') ?>">Profil Saya</a></li>

@@ -16,5 +16,7 @@
     <link href="<?php echo base_url('assets/template/backend/')?>dist/css/skins/skin-green.min.css" rel="stylesheet" type="text/css" />
     <!-- Favicon -->
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/fav.png') ?>" />
+    
+  <script src="<?php echo base_url('assets/js/') ?>fech.js"></script>
   </head>
   <body class="skin-green sidebar-mini">

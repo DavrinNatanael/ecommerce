@@ -11,8 +11,23 @@ class Cart_model extends CI_Model
   function get_all()
   {
     $this->db->join('users', 'transaksi.user_id = users.id');
+    $this->db->join('transaksi_detail','transaksi.id_trans = transaksi_detail.trans_id');
     return $this->db->get($this->table)->result();
   }
+
+  // public function getTransId($pdid,$trs){
+  //   $this->db->join('produk', 'transaksi_detail.produk_id = produk.id_produk');
+  //   $this->db->where('trans_id',$trs);
+  //   $this->db->where('produk_id',$pdid);
+  //   return $this->db->get($this->table2)->row();
+  // }
+
+  // public function selectproduct($id){
+  //   $this->db->join('produk', 'transaksi_detail.produk_id = produk.id_produk');
+  //   $this->db->where('trans_id',$id);
+  //   $this->db->where('user',$this->session->userdata('user_id'));
+  //   return $this->db->get($this->table2)->result();
+  // }
 
   function top5_transaksi()
   {
@@ -289,6 +304,7 @@ class Cart_model extends CI_Model
     $this->db->where($this->id2, $id);
     $this->db->where('user', $this->session->userdata('user_id'));
     $this->db->where('status','1');
+
     return $this->db->get($this->table2)->row();
   }
 

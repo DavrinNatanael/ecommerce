@@ -19,7 +19,7 @@
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="<?php echo base_url('assets/template/backend/') ?>index2.html"><b>Admin</b>LTE</a>
+        <a href="<?php echo base_url('assets/template/backend/') ?>index2.html"><b>Fashion Store</b><br>Admin Control Panel</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
@@ -36,11 +36,11 @@
           <div class="row">
             <div class="col-lg-12">
               <p><?php echo $captcha ?></p>
-              <p>Remember Me: <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?></p>
+              <!-- <p>Remember Me: <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?></p> -->
               <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div><!-- /.col -->
           </div>
-          <p><p><a href="#" data-toggle="modal" data-target="#pswreset"><b>Lupa Password?</b></a></p>
+          <!-- <p><p><a href="#" data-toggle="modal" data-target="#pswreset"><b>Lupa Password?</b></a></p> -->
         </form>
         <?php echo form_close();?>
       </div><!-- /.login-box-body -->

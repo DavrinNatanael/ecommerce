@@ -12,6 +12,7 @@
 			</nav>
     </div>
     <div class="col-lg-12"><h1>Riwayat Transaksi</h1><hr>
+			<?php echo $this->session->flashdata('msg'); ?>
 			<div class="row">
 			  <div class="col-lg-12">
           <div class="box-body table-responsive padding">
@@ -58,11 +59,12 @@
 										<?php if($history->resi != NULL){echo $history->resi;}else{echo "Belum ada";} ?>
 									</td>
 									<td style="text-align:center">
-										<?php if($history->status == '4') {?>
-											<a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
-												<button name="update" class="btn btn-sm btn-warning col-sm-12"><i class="icon-headphones"></i> Komplain</button>
-													<br>
-											</a>
+										<?php if($history->status == '4' && $history->komplain_status == '0') {?>
+											<form class="" action="<?php echo base_url('page/komplain/').$history->id_trans ?>" method="post">
+												<input type="hidden" name="trans" value="<?php echo $history->id_trans ?>">
+													<button type="submit" class="btn btn-sm btn-warning col-sm-12"><i class="icon-headphones"></i> Komplain</button>
+														<br>
+											</form>
 											<a href="<?php echo base_url('cart/history_detail/').$history->id_trans ?>">
 												<br>
 												<button name="update" class="btn btn-sm btn-warning col-sm-12"><i class="icon-zoom-in"></i> Detail</button>

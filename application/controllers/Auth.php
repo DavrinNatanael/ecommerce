@@ -177,6 +177,11 @@ class Auth extends CI_Controller {
 		$this->load->view('front/auth/kota',$this->data);
 	}
 
+	public function lupa_password(){
+		$this->data['title'] 							= 'Lupa password';
+		$this->load->view('front/auth/forgot_password',$this->data);
+	}
+
 	public function login()
 	{
 		$this->data['title'] 							= 'Login';
@@ -411,8 +416,9 @@ class Auth extends CI_Controller {
  									$this->session->set_flashdata('message', '
  					        <div class="alert alert-block alert-danger"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
  										<i class="ace-icon fa fa-bullhorn green"></i> Update Data Gagal
- 					        </div>');
- 					        redirect(base_url('auth/profil'));
+							 </div>');
+							 echo "ada";
+ 					        // redirect(base_url('auth/profil'));
  								}
  							}
  					}

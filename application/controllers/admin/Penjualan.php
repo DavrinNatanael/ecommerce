@@ -98,10 +98,21 @@ class Penjualan extends CI_Controller
           'resi'    => $this->input->post('resi'),
           'status'  => '3',
         );
+        $identity = $this->input->post('useridentity');
+        $eventdate = $this->input->post('eventdate');
+        $eventdate2 = $this->input->post('eventdate2');
+
+        require_once 'config.php';
+        include_once 'dbConnect.php';
+        $sqlstat = "CREATE EVENT `$identity accept` ON SCHEDULE AT '$eventdate 23:59:59.000000' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `transaksi` SET `status` = '4' WHERE `status` = '3' AND `user_id` = $identity";
+        $sqlstat2 = "CREATE EVENT `$identity finish` ON SCHEDULE AT '$eventdate2 23:59:59.000000' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `transaksi` SET `status` = '5' WHERE `status` = '4' AND `user_id` = $identity";
+        $insertstat = $db->query($sqlstat);
+        $insertstat2 = $db->query($sqlstat2);
 
         $this->Cart_model->update($this->input->post('id_trans'), $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success alert">Edit Data Berhasil</div>');
         redirect(site_url('admin/penjualan'));
+        die();
       }
   }
 

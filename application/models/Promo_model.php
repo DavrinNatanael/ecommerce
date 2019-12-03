@@ -7,7 +7,7 @@ class Promo_model extends CI_Model
   public $id = 'id_promo';
   public $order ='DESC';
 
-  var $column = array('kode_promo','ket_promo','discount','max_pembelian','max_user');
+  var $column = array('kode_promo','ket_promo','discount','max_pembelian','max_users');
 
   private function _get_datatables_query()
   {
@@ -47,6 +47,33 @@ class Promo_model extends CI_Model
 			$this->db->order_by(key($order), $order[key($order)]);
 		}
 	}
+  function insert($data)
+  {
+    $this->db->insert($this->table, $data);
+  }
+
+  function kuranguser($nuklir,$promuser)
+  {
+    $this->db->where('kode_promo',$nuklir);
+    $this->db->update($this->table, $promuser);
+  }
+
+  function get_by_id($id)
+  {
+    $this->db->where($this->id, $id);
+    return $this->db->get($this->table)->row();
+  }
+  function update($id, $data)
+  {
+    $this->db->where($this->id,$id);
+    $this->db->update($this->table, $data);
+  }
+
+  function delete($id)
+  {
+    $this->db->where($this->id, $id);
+    $this->db->delete($this->table);
+  }
 
   public function get_datatables()
 	{

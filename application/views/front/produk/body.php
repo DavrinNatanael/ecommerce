@@ -28,6 +28,7 @@
 					<br>
 				</div>
 				<div class="col-sm-7"><p><h4>Spesifikasi Produk</h4></p><hr>
+					<p>Sisa stok : <?php echo $produk->stok; ?></p>
 					<p>Berat: <?php echo $produk->berat ?> gr</p>
 					<?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
 						<p>Harga: Rp <strike><b>Rp <?php echo number_format($produk->harga_normal) ?></b></strike> | <b>Rp <?php echo number_format($produk->harga_diskon) ?></b> <font style="font-size:15px"><span class="badge badge-pill badge-primary"><?php echo $produk->diskon ?>% OFF</span></font></p>
@@ -116,35 +117,6 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg">
-					<?php if(isset($_SESSION['identity']) && $_SESSION['usertype'] == '2'){ ?>
-						<div id="disqus_thread"></div>
-							<script>
-
-							/**
-							*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-							*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-							/*
-							var disqus_config = function () {
-							this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-							this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-							};
-							*/
-							(function() { // DON'T EDIT BELOW THIS LINE
-							var d = document, s = d.createElement('script');
-							s.src = 'https://ecommerce-gc6ez1xrdd.disqus.com/embed.js';
-							s.setAttribute('data-timestamp', +new Date());
-							(d.head || d.body).appendChild(s);
-							})();
-							</script>
-							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-							<script id="dsq-count-scr" src="//ecommerce-gc6ez1xrdd.disqus.com/count.js" async></script>
-			    <?php } else { ?>
-			    <?php } ?>
-
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-lg-12"><hr><h4>Deskripsi Produk</h4><hr>
 					<p><?php echo $produk->deskripsi ?></p>
 				</div>
@@ -197,7 +169,7 @@
 										</a>
 										<div class="card-body">
 											<a href="<?php echo base_url("produk/$lainnya->slug_produk ") ?>">
-												<p class="card-text"><b><?php echo character_limiter($lainnya->judul_produk,50) ?></b></p>
+												<p class="card-text"><b><?php echo character_limiter($lainnya->judul_produk,25) ?></b></p>
 											</a>
 											<br>
 											<p align="center">

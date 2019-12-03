@@ -24,6 +24,7 @@
 							</button>
 							<br>
 						<?php } ?>
+
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  <div class="modal-dialog" role="document">
@@ -37,7 +38,7 @@
 							        </button>
 							      </div>
 							      <div class="modal-body">
-							        <input name="kode" type="text" class="form-control" placeholder="Masukkan kode promo" aria-label="Username" aria-describedby="basic-addon1">
+							        <input onchange="promovalue()" id="promomodal" name="kode" type="text" class="form-control" placeholder="Masukkan kode promo" aria-label="Username" aria-describedby="basic-addon1">
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -52,12 +53,12 @@
               <thead>
                 <tr>
                   <th style="text-align: center">No.</th>
-                  <th style="text-align: center; width:400px;">Barang</th>
-									<th style="text-align: center">Harga</th>
-                  <th style="text-align: center">Berat</th>
+                  <th style="text-align: center; width:300px;">Barang</th>
+									<th style="text-align: center">Harga(Rp)</th>
+                  <th style="text-align: center">Berat(gr)</th>
 									<th style="text-align: center">Qty</th>
-                  <th style="text-align: center">J.Berat</th>
-                  <th style="text-align: center">Total</th>
+                  <th style="text-align: center">J.Berat(gr)</th>
+                  <th style="text-align: center">Total(Rp)</th>
                   <th style="text-align: center">Catatan</th>
                   <th style="text-align: center">Aksi</th>
                 </tr>
@@ -66,7 +67,7 @@
               <?php $no=1; foreach ($cart_data as $cart){ ?>
                 <tr>
                   <td style="text-align:center"><?php echo $no++ ?></td>
-                  <td style="text-align:left; width:400px;"><a href="<?php echo base_url('produk/read/').$cart->slug_produk ?>"><?php echo $cart->judul_produk ?></a></td>
+                  <td style="text-align:left; width:300px;"><a href="<?php echo base_url('produk/read/').$cart->slug_produk ?>"><?php echo $cart->judul_produk ?></a></td>
 									<td style="text-align:center"><?php echo number_format($cart->harga_diskon) ?></td>
 									<td style="text-align:center"><?php echo $cart->berat ?></td>
 									<form action="<?php echo base_url('cart/update/').$cart->produk_id ?>" method="post">
@@ -100,9 +101,6 @@
   			  </div>
   			</div>
   		</div>
-			<div id="warn" hidden="hidden" class="col-lg-12">
-				<div class="alert alert-danger"><i class="ace-icon fa fa-bullhorn green"></i> Kamu telah melakukan perubahan pada keranjang belanja. Harap simpan perubahan terlebih dahulu sebelum melanjutkan pembelian !</div>
-			</div>
 			<?php echo form_open('cart/checkout') ?>
 				<table class="table table-striped table-bordered">
 				  <tbody>
@@ -115,7 +113,7 @@
 							<td></td>
 							<td align="right"><?php echo $total_berat_dan_subtotal->subtotal ?></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 				      <th>Ongkos Kirim</th>
 				      <td>Via:
 								<select id="kurir" name="kurir" class="kurir" required>
@@ -136,15 +134,16 @@
 								</div>
 							</td>
 							<td align="right"><font id="totalongkir"></font></td>
-				    </tr>
+				    </tr> -->
+						<input type="hidden" name="kodenuklir" value="<?php echo $promo->kode_promo ?>">
 						<tr>
 				      <th scope="row">Promo</th>
-							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian) {?>
+							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal>$promo->max_pembelian && $promo->max_users) {?>
 				      	<td align="right">Promo <?php echo $promo->discount; ?>% dari SubTotal</td>
 							<?php }else{ ?>
 								<td align="right">Tidak ada promo yang digunakan</td>
 							<?php } ?>
-							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian) {?>
+							<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal>$promo->max_pembelian && $promo->max_users) {?>
 					      <td align="right">
 									<b><div id="promohtml"> <input type="hidden" id="promoin" name="promoin" value="<?php echo ($total_berat_dan_subtotal->subtotal * $promo->discount)/100 ?>"><?php echo ($total_berat_dan_subtotal->subtotal * $promo->discount)/100 ?></div></b>
 								</td>
@@ -170,7 +169,7 @@
 								<tr>
 									<th style="text-align: center">Nama</th>
 									<th style="text-align: center">No. HP</th>
-									<th style="text-align: center">Alamat</th>
+									<th style="text-align: center">Alamat(Alamat, Nama Kota, Nama Provinsi)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -215,6 +214,11 @@
 								</button>
 					    <?php } else { ?>
 									<button id="selesai" name="checkout" type="submit" class="btn btn-success" aria-label="Left Align" title="checkout">
+										<?php
+                    $timestamp = time()-86400;
+                    $date = strtotime("+2 day", $timestamp);
+                    ?>
+										<input type="hidden" name="eventdate" value="<?php echo date('Y-m-d', $date); ?>">
 										<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Selesai Belanja
 									</button>
 					    <?php } ?>
@@ -222,8 +226,9 @@
 					</div>
 					<input type="hidden" name="id_trans" value="<?php echo $customer_data->id_trans ?>">
 					<input type="hidden" name="kodepromo" value="<?php echo $promo->id_promo ?>">
-					<input type="" name="nuke" value="<?php $nuke ?>">
-					<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal<$promo->max_pembelian){ ?>
+					<input type="hidden" name="nuke" value="<?php $nuke ?>">
+					<input type="hidden" name="kodenuklir2" value="<?php echo $promo->max_users; ?>">
+					<?php if(!empty($promo) && empty($promocek) && $nuke=1 && $total_berat_dan_subtotal->subtotal>$promo->max_pembelian && $promo->max_users>0){ ?>
 						<input type="hidden" name="total" id="total" value="<?php echo $total_berat_dan_subtotal->subtotal - ($total_berat_dan_subtotal->subtotal * $promo->discount)/100?>"/>
 					<?php }else{ ?>
 						<input type="hidden" name="total" id="total" value="<?php echo $total_berat_dan_subtotal->subtotal ?>"/>
@@ -234,6 +239,8 @@
 	  </div>
 
 		<script type="text/javascript">
+				var promoval = document.getElementById("promoval");
+				var promomodal = document.getElementById("promomodal");
 				var tmp = document.getElementById("tmp");
 				var tmp2 = document.getElementById("tmp2");
 				var warn = document.getElementById("warn");
@@ -252,6 +259,10 @@
 					function total<?php echo $i ?>(){
 						berat<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * berathi<?php echo $i ?>.value;
 						harga<?php echo $i ?>.innerHTML = qty<?php echo $i ?>.value * hargahi<?php echo $i ?>.value;
+					}
+
+					function promovalue(){
+						promoval.value=promomodal.value;
 					}
 				<?php } ?>
 		</script>

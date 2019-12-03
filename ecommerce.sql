@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24 Jul 2019 pada 19.38
+-- Generation Time: 15 Agu 2019 pada 17.09
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -127,6 +127,40 @@ CREATE TABLE `kategori` (
 INSERT INTO `kategori` (`id_kategori`, `judul_kategori`, `slug_kat`) VALUES
 (1, 'Fashion Pria', 'pakaian-pria'),
 (2, 'Fashion Wanita', 'fashion-wanita');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `komplain`
+--
+
+CREATE TABLE `komplain` (
+  `id_komplain` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `no_rek` varchar(20) NOT NULL,
+  `foto_komplain` varchar(100) NOT NULL,
+  `foto_komplain_type` varchar(6) NOT NULL,
+  `transdet_id` int(11) NOT NULL,
+  `aksi` varchar(30) NOT NULL,
+  `alasan` varchar(200) NOT NULL,
+  `status` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `komplain`
+--
+
+INSERT INTO `komplain` (`id_komplain`, `user_id`, `no_rek`, `foto_komplain`, `foto_komplain_type`, `transdet_id`, `aksi`, `alasan`, `status`) VALUES
+(9, 2, '-', 'test', '.jpg', 4, 'Penggantian barang', 'hey kamu', 2),
+(10, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'hay kamu 2', 2),
+(11, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'asdad', 1),
+(12, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'asdad', 1),
+(13, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'asdad', 0),
+(14, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'asd', 0),
+(22, 2, '-', 'test', '.jpg', 4, 'Penggantian barang', 'asdasd', 0),
+(23, 2, '-', 'test', '.jpg', 4, 'Penggantian barang', 'akakakakak', 0),
+(24, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'aaakakakakakak', 1),
+(28, 2, '-', 'test', '.jpg', 1, 'Penggantian barang', 'asdad', 3);
 
 -- --------------------------------------------------------
 
@@ -773,6 +807,30 @@ CREATE TABLE `payments` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `penukaran_barang`
+--
+
+CREATE TABLE `penukaran_barang` (
+  `id_penukaran` int(11) NOT NULL,
+  `komplain_id` int(11) NOT NULL,
+  `resi` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `penukaran_barang`
+--
+
+INSERT INTO `penukaran_barang` (`id_penukaran`, `komplain_id`, `resi`) VALUES
+(5, 28, 'asdasdasdsa'),
+(6, 28, 'asdasdasdsa'),
+(7, 28, 'asdasdasdsa'),
+(8, 28, 'asdasdasdsa'),
+(9, 28, 'asdasdasdsa'),
+(10, 28, 'asdasdasdsa');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `produk`
 --
 
@@ -802,9 +860,9 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `judul_produk`, `slug_produk`, `keywords`, `deskripsi`, `berat`, `kat_id`, `subkat_id`, `harga_normal`, `diskon`, `harga_diskon`, `stok`, `foto`, `foto_type`, `uploader`, `created`, `updater`, `modified`) VALUES
-(1, 'Anting Swarovski Petite Irish Aurore Earring', 'anting-swarovski-petite-irish-aurore-earring', 'anting swarovski petite irish aurore earring', '<p>Ukuran Hati : 10 mm<br>Warna Hati : Aurore Boreale*<br>Ear Post : Jewelry Grade Stainless Steel<br>Komponen Lain : Double Coated Silver Plated Wire<br>Kelengkapan : Belakangan Anting, Sertifikat, Tempat Penyimpanan<br><br>Irish Collection adalah perhiasan menggunakan Swarovski Kristal berbentuk hati dari AR Hestia. Petite Irish Collection merupaka pilihan tepat untuk Anda yang suka penampilan simpel tapi tetap elegant.<br><br>Irish Collection merupakan line product favorit konsumen AR Hestia. Bentuk hati merupakan lambang Kasih Sayang. Berbagai macam koleksi warna kami hadirkan melalui Irish Collection. Irish Collection merupakan pilihan tepat jika anda menginginkan penampilan sehari-hari sederhana, manis, dan elegant.</p>', 2, 2, 5, 590000, 30, 413000, 5, 'perhiasan-anting-swarovski-petite-irish-aurore-earring20171206143431', '.jpg', '', '2017-11-09 07:59:57', 'azmicolejr', '2019-07-24 09:54:51'),
-(2, 'Anting Swarovski Petite Irish Vitrail Earring', 'anting-swarovski-petite-irish-vitrail-earring', 'anting swarovski petite irish vitrail earring', '<p>Ukuran Hati : 10 mm<br>Warna Hati : Vitrail Light (Ungu ke Biru Muda)<br>Ear Post : Jewelry Grade Stainless Steel<br>Komponen Lain : Double Coated Silver Plated Wire<br>Kelengkapan : Anting, Belakangan Anting, Sertifikat, Tempat Penyimpanan<br><br>Irish Collection adalah perhiasan menggunakan Swarovski Kristal berbentuk hati dari AR Hestia. Petite Irish Collection merupaka pilihan tepat untuk Anda yang suka penampilan simpel tapi tetap elegant.<br><br>Irish Collection merupakan line product favorit konsumen AR Hestia. Bentuk hati merupakan lambang Kasih Sayang. Berbagai macam koleksi warna kami hadirkan melalui Irish Collection. Irish Collection merupakan pilihan tepat jika anda menginginkan penampilan sehari-hari sederhana, manis, dan elegant.</p>', 1, 2, 5, 40000, 25, 30000, 4, 'perhiasan-anting-swarovski-petite-irish-vitrail-earring20171206143332', '.jpg', 'azmicolejr', '2017-11-25 06:03:21', 'azmicolejr', '2019-07-24 01:10:03'),
-(3, 'Sepatu Boots Pria NJ George Coffee A02', 'sepatu-boots-pria-nj-george-coffee-a02', 'sepatu boots pria nj george coffee a02', '<p>ahan synth leather<br>Pilihan ukuran 40 sampai dengan 43<br>40: 25,5 Cm<br>41: 26 Cm<br>42: 26,5 Cm<br>43: 27 Cm<br><br>Mohon perhatikan ukuran dalam cm<br>Karena jika kebesaran atau kekecilan<br>Tidak bisa proses retur<br><br>STOK TERBATAS<br>Mohon tanyakan ketersediaan<br>Sebelum melakukan pemesanan<br><br>NOTE<br>Kami tidak melayani permintaan foto ulang produk <br>Dengan alasan apapun.</p>', 100, 1, 1, 250000, 45, 137500, 4, 'sepatu-boots-pria-nj-george-coffee-a0220171125024800', '.jpg', 'azmicolejr', '2017-11-25 08:48:00', 'azmicolejr', '2019-07-24 10:01:52'),
+(1, 'Anting Swarovski Petite Irish Aurore Earring', 'anting-swarovski-petite-irish-aurore-earring', 'anting swarovski petite irish aurore earring', '<p>Ukuran Hati : 10 mm<br>Warna Hati : Aurore Boreale*<br>Ear Post : Jewelry Grade Stainless Steel<br>Komponen Lain : Double Coated Silver Plated Wire<br>Kelengkapan : Belakangan Anting, Sertifikat, Tempat Penyimpanan<br><br>Irish Collection adalah perhiasan menggunakan Swarovski Kristal berbentuk hati dari AR Hestia. Petite Irish Collection merupaka pilihan tepat untuk Anda yang suka penampilan simpel tapi tetap elegant.<br><br>Irish Collection merupakan line product favorit konsumen AR Hestia. Bentuk hati merupakan lambang Kasih Sayang. Berbagai macam koleksi warna kami hadirkan melalui Irish Collection. Irish Collection merupakan pilihan tepat jika anda menginginkan penampilan sehari-hari sederhana, manis, dan elegant.</p>', 2, 2, 5, 590000, 30, 413000, 7, 'perhiasan-anting-swarovski-petite-irish-aurore-earring20171206143431', '.jpg', '', '2017-11-09 07:59:57', 'azmicolejr', '2019-07-30 13:40:05'),
+(2, 'Anting Swarovski Petite Irish Vitrail Earring', 'anting-swarovski-petite-irish-vitrail-earring', 'anting swarovski petite irish vitrail earring', '<p>Ukuran Hati : 10 mm<br>Warna Hati : Vitrail Light (Ungu ke Biru Muda)<br>Ear Post : Jewelry Grade Stainless Steel<br>Komponen Lain : Double Coated Silver Plated Wire<br>Kelengkapan : Anting, Belakangan Anting, Sertifikat, Tempat Penyimpanan<br><br>Irish Collection adalah perhiasan menggunakan Swarovski Kristal berbentuk hati dari AR Hestia. Petite Irish Collection merupaka pilihan tepat untuk Anda yang suka penampilan simpel tapi tetap elegant.<br><br>Irish Collection merupakan line product favorit konsumen AR Hestia. Bentuk hati merupakan lambang Kasih Sayang. Berbagai macam koleksi warna kami hadirkan melalui Irish Collection. Irish Collection merupakan pilihan tepat jika anda menginginkan penampilan sehari-hari sederhana, manis, dan elegant.</p>', 1, 2, 5, 40000, 25, 30000, 2, 'perhiasan-anting-swarovski-petite-irish-vitrail-earring20171206143332', '.jpg', 'azmicolejr', '2017-11-25 06:03:21', 'azmicolejr', '2019-07-26 00:11:46'),
+(3, 'Sepatu Boots Pria NJ George Coffee A02', 'sepatu-boots-pria-nj-george-coffee-a02', 'sepatu boots pria nj george coffee a02', '<p>ahan synth leather<br>Pilihan ukuran 40 sampai dengan 43<br>40: 25,5 Cm<br>41: 26 Cm<br>42: 26,5 Cm<br>43: 27 Cm<br><br>Mohon perhatikan ukuran dalam cm<br>Karena jika kebesaran atau kekecilan<br>Tidak bisa proses retur<br><br>STOK TERBATAS<br>Mohon tanyakan ketersediaan<br>Sebelum melakukan pemesanan<br><br>NOTE<br>Kami tidak melayani permintaan foto ulang produk <br>Dengan alasan apapun.</p>', 100, 1, 1, 250000, 45, 137500, 4, 'sepatu-boots-pria-nj-george-coffee-a0220171125024800', '.jpg', 'azmicolejr', '2017-11-25 08:48:00', 'azmicolejr', '2019-07-26 00:11:57'),
 (4, 'Liontin  Swarovski - Petite Edelweiss Aurore', 'liontin-swarovski-petite-edelweiss-aurore', 'liontin swarovski - petite edelweiss aurore', '<p>Crystal Size : 1.8cm<br>Colour : Aurore Boreale**<br>Material : Solid Argentium Silver*<br>Kelengkapan Pembelian : Kalung Titanium, Box dan Sertifikat Keaslian<br><br>Edelweiss Pendant is a tribute to 120 Years Anniversary of Swarovski and become one of the most precision Edelweiss Crystal so far. Carefully hand-crafted by AR Signature using Solid Argentium Silver, give you a playful and youthful looks.</p>', 2, 2, 7, 650000, 20, 520000, 8, 'liontin-kalung-swarovski-petite-edelweiss-aurore20171206143733', '.jpg', 'azmicolejr', '2017-12-06 20:37:33', 'azmicolejr', '2019-07-23 02:49:27'),
 (5, 'Liontin Swarovski - Allure Rose Necklace', 'liontin-swarovski-allure-rose-necklace', 'liontin swarovski - allure rose necklace', '<p>Crystal Size : 2.2 cm<br>Colour : Light Rose<br>Other Crystal Colour : Aurore Boreale***<br>Crytal Cutting Type : Pear Shape Cut Pendant<br>Material : Solid Argentium Silver*<br>Chain Necklace : Jewelry Grade Stainless Steel** ( 42 cm )<br><br>Allure Pendant is made of Pear shape cut Swarovski Crystal and Solid Argentium Silver. This classic sophisticated necklace shows beauty and tenderness. Fits perfectly for daily use.</p>', 2, 2, 7, 450000, 30, 315000, 5, 'liontin-kalung-swarovski-allure-rose-necklace20171206143816', '.jpg', 'azmicolejr', '2017-12-06 20:38:16', 'azmicolejr', '2019-07-23 01:54:17'),
 (6, 'Gelang Kesehatan Kaukah/ Kokka Kotak Hitam', 'gelang-kesehatan-kaukah-kokka-kotak-hitam', 'gelang kesehatan kaukah/ kokka kotak hitam ', '<p>Ukuran lingkar gelang 15-16 cm<br>Warna Hitam Original<br>Model Kotak Mardjan<br><br>Kelengkapan :<br>v Gelang Kaukah Kokka Asli<br>v Brosur Informasi<br>v Dus/Box + Kaleng Plastik esklusif<br>v Sertifikat + Hologram Keaslian<br>v Bonus Sticker</p>', 3, 2, 6, 120000, 15, 102000, 4, 'gelang-kesehatan-kaukahkokka-kotak-hitam-bersertifikat-asli-istanbul20171206143933', '.jpg', 'azmicolejr', '2017-12-06 20:39:33', 'azmicolejr', '2019-07-22 06:38:54'),
@@ -903,7 +961,7 @@ CREATE TABLE `promo` (
 
 INSERT INTO `promo` (`id_promo`, `kode_promo`, `ket_promo`, `discount`, `max_pembelian`, `max_users`) VALUES
 (2, 'OKEOCE', 'OKEEEE', 10, 100000, 6),
-(3, 'SIP', 'siplah', 20, 100000, 1);
+(3, 'SIP', 'siplah', 20, 100000, 10);
 
 -- --------------------------------------------------------
 
@@ -923,7 +981,8 @@ CREATE TABLE `promo_detail` (
 --
 
 INSERT INTO `promo_detail` (`promo_detail_id`, `promo`, `trans`, `user`) VALUES
-(15, 2, 139, 2);
+(17, 3, 1, 2),
+(18, 2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -1028,7 +1087,8 @@ INSERT INTO `rating` (`id_rating`, `item_id`, `id_users`, `rating`, `testi`, `da
 (64, 13, 41, 5, 'kgzmvzmvzjvzjxkg', '2019-07-21 20:09:17'),
 (65, 3, 41, 3, 'jfzjgzjgzjgzjgxcjxdvxxbxkbxkxkbxh', '2019-07-21 20:09:17'),
 (66, 10, 41, 3, 'kgzzkggk', '2019-07-21 20:09:17'),
-(70, 1, 35, 1, 'jelek x barang nya lek', '2019-07-23 06:16:06');
+(70, 1, 35, 1, 'jelek x barang nya lek', '2019-07-23 06:16:06'),
+(71, 2, 2, 4, '', '2019-07-25 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -1081,9 +1141,10 @@ CREATE TABLE `slider` (
 --
 
 INSERT INTO `slider` (`id_slider`, `no_urut`, `judul_slider`, `link`, `foto`, `foto_type`, `foto_size`, `created`, `created_by`, `modified`, `modified_by`) VALUES
-(1, 3, 'Eye Liner', 'asda', '120171204051126', '.jpg', 203, '2019-06-09 08:05:03', '', '2019-06-14 07:13:16', 'admin'),
-(2, 2, 'Hat for Men', 'asdasd', '220180208025208', '.jpg', 833, '2019-06-09 08:05:03', '', '2019-06-14 07:13:19', 'admin'),
-(3, 1, 'Make-up', 'asd', '4564564564654', '.jpg', 167, '2019-06-09 08:05:03', '', '2019-06-14 07:17:34', 'admin');
+(1, 4, 'Eye Liner', 'asda', '120171204051126', '.jpg', 203, '2019-06-09 08:05:03', '', '2019-07-25 04:48:56', 'superadmin'),
+(2, 3, 'Hat for Men', 'asdasd', '220180208025208', '.jpg', 833, '2019-06-09 08:05:03', '', '2019-07-25 04:48:48', 'superadmin'),
+(3, 2, 'Make-up', 'asd', '4564564564654', '.jpg', 167, '2019-06-09 08:05:03', '', '2019-07-25 04:48:38', 'superadmin'),
+(5, 1, '20 % Off', 'http://localhost/ecommerce/page/promopage', '120190725044828', '.jpg', 0, '2019-07-25 04:48:29', 'superadmin', '2019-07-25 05:13:04', 'superadmin');
 
 -- --------------------------------------------------------
 
@@ -1158,16 +1219,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_trans`, `user_id`, `created`, `ongkir`, `kurir`, `service`, `status`, `resi`, `promo_id`) VALUES
-(139, 2, '2019-07-23 21:06:40', 10000, 'jne', 'CTCYES', 1, NULL, 0),
-(140, 2, '2019-07-23 21:07:33', 7000, 'jne', 'CTC', 1, NULL, 0),
-(141, 2, '2019-07-23 21:08:01', 10000, 'jne', 'CTCYES', 1, NULL, 0),
-(142, 2, '2019-07-23 21:09:55', 10000, 'jne', 'CTCYES', 1, NULL, 0),
-(143, 2, '2019-07-23 21:17:01', 20000, 'jne', 'CTCYES', 1, NULL, 0),
-(144, 2, '2019-07-23 21:22:16', 18000, 'pos', 'Express Sameday Barang', 1, NULL, 0),
-(145, 2, '2019-07-23 21:34:37', 10000, 'jne', 'CTCYES', 1, NULL, 0),
-(146, 2, '2019-07-23 22:20:15', 10000, 'jne', 'CTCYES', 1, NULL, 0),
-(147, 2, '2019-07-23 23:49:42', 7000, 'jne', 'CTC', 1, NULL, 0),
-(150, 2, '2019-07-24 01:26:32', 0, '', '', 0, NULL, 0);
+(1, 2, '2019-07-25 01:58:12', 10000, 'jne', 'CTCYES', 4, NULL, 0),
+(2, 2, '2019-07-25 04:08:08', 7000, 'jne', 'CTC', 5, 'esportkokdota', 0),
+(3, 2, '2019-07-26 00:28:16', 0, '', '', 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1194,15 +1248,9 @@ CREATE TABLE `transaksi_detail` (
 --
 
 INSERT INTO `transaksi_detail` (`id_transdet`, `trans_id`, `user`, `produk_id`, `harga`, `berat`, `total_qty`, `total_berat`, `subtotal`, `catatan`, `rating_status`) VALUES
-(321, 139, 2, 3, 137500, 100, 2, 200, 275000, 'catatan', 0),
-(322, 140, 2, 1, 413000, 2, 1, 2, 413000, '', 0),
-(323, 141, 2, 1, 413000, 2, 1, 2, 413000, '', 0),
-(324, 142, 2, 2, 30000, 1, 2, 2, 54000, 'catatan', 0),
-(325, 143, 2, 8, 90000, 400, 5, 2000, 405000, '', 0),
-(326, 144, 2, 3, 137500, 100, 2, 200, 247500, 'catatan', 0),
-(328, 145, 2, 2, 30000, 1, 1, 1, 27000, NULL, 0),
-(330, 146, 2, 3, 137500, 100, 1, 100, 123750, '', 0),
-(332, 147, 2, 1, 413000, 2, 1, 2, 413000, '', 0);
+(1, 1, 2, 2, 30000, 1, 1, 1, 30000, '', 0),
+(4, 1, 2, 1, 413000, 1, 1, 2, 413000, '', 0),
+(8, 2, 2, 2, 30000, 1, 1, 1, 27000, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1242,15 +1290,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `phone`, `provinsi`, `kota`, `address`, `usertype`, `active`, `photo`, `photo_type`, `ip_address`, `salt`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `last_login`, `created_on`, `modified`, `lahir`, `umur`) VALUES
-(1, 'Super Admin', 'superadmin', '$2y$08$D8i7zeJSUQulCZKsx/FKGul8ZwWcBxcCGL34/J6Ipzs228xyS9TSG', 'admin@gmail.com', '081228289766', 6, 151, 'asdasdasdsa', 1, 1, 'super-admin20190627142247', '.png', '::1', NULL, NULL, NULL, NULL, NULL, 1563831640, 2147483647, '2019-07-23 04:40:40', '0000-00-00', 0),
-(2, 'Davrin', 'davrinsyn', '$2y$08$jw4MKvIqyzRfEfif2XxbleOzxOmABseq05UB/wSn96EetXDcyoZIm', 'davrinsyna@gmail.com', '081361557026', 34, 278, 'Jl.Jamin Ginting', 2, 1, 'davrin20190722054341', '.png', '::1', NULL, NULL, 'a3NZBOU5-LWM7GbvDXHY.O0eceb447acdad9e0b2', 1561617252, '1WonbvYw2P2leMBhaiazge', 1563982015, 1560470637, '2019-07-24 22:26:55', '1997-04-03', 22),
+(1, 'Super Admin', 'superadmin', '$2y$08$D8i7zeJSUQulCZKsx/FKGul8ZwWcBxcCGL34/J6Ipzs228xyS9TSG', 'admin@gmail.com', '081228289766', 6, 151, 'asdasdasdsa', 1, 1, 'super-admin20190627142247', '.png', '::1', NULL, NULL, NULL, NULL, NULL, 1564775138, 2147483647, '2019-08-03 02:45:38', '0000-00-00', 0),
+(2, 'Davrin', 'davrinsyn', '$2y$08$c96ZS06oIM3.oM5VvboPwe0B.6NQn3Me5xJTyuJu/OZffzfmz72ra', 'davrinsyna@gmail.com', '081361557026', 6, 151, 'Jl.Jamin Ginting', 2, 1, 'davrin20190726013523', '.jpg', '::1', NULL, NULL, 'a3NZBOU5-LWM7GbvDXHY.O0eceb447acdad9e0b2', 1561617252, '1WonbvYw2P2leMBhaiazge', 1565816953, 1560470637, '2019-08-15 04:09:13', '2019-07-27', 0),
 (3, 'usertest', 'usertest', '$2y$08$Ii6u22NsT3AVwSoNNRYOD.Hkos5rchsITPO04RRdHwRM5EOnpQFgG', 'user@gmail.com', '08121212', 34, 15, 'Jl. Jamin ginting No.409', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1563358469, 1561943514, '2019-07-17 17:14:29', '1997-03-04', 22),
-(6, 'roni', 'roni', '$2y$08$5plmibllxBEqir42/cZ2gOfqmE53T1WGOAwbuwD8TxVaMuR45jbuy', 'roni@gmail.com', '454554', 3, 106, 'asdas', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1561953444, 1561948553, '2019-07-04 14:39:59', '1998-03-04', 21),
+(6, 'roni', 'roni', '$2y$08$5plmibllxBEqir42/cZ2gOfqmE53T1WGOAwbuwD8TxVaMuR45jbuy', 'roni@gmail.com', '454554', 3, 106, 'asdas', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1564679044, 1561948553, '2019-08-02 00:04:04', '1998-03-04', 21),
 (7, 'Davrin', 'ruru', '$2y$08$aOqwudRTYcwov9D0weE9W.aHYVmhn5/xljGqEx.hXx1DC7eA9Bgp.', 'dasda@gmail.com', '', 19, 14, '', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1562728713, 1562728535, '2019-07-10 10:18:33', '2013-03-01', 6),
 (27, 'lala', 'lala', '$2y$08$JX12abWbnfOd.JzJNHQVSu0J/y3Ms3HMS.94BRgF5NgvTjnO1nU7m', 'lala@gmail.com', '2342523', 15, 214, 'dfasj;fasl', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, NULL, 1559625144, '2019-07-15 14:30:29', '0000-00-00', 0),
 (30, 'aaa', 'aaa', '$2y$11$lXznFB4GYzZdQLSszGFzIuvXtdrc43Bj6mP38uQ8LkL/teAwBoG4i', 'aaa@gmail.com', '088182381', 27, 2, 'pakam', 2, 1, 'aaa1563105367', '.jpg', '', NULL, NULL, NULL, NULL, NULL, 1563762740, 1559627466, '2019-07-22 09:32:20', '0000-00-00', 27),
 (32, 'hahaha', 'hahaha', '$2y$11$9XVoXhszUNZlbeTWkOBqoe9bT6rg62TP0d4rukNBY38OzTcT2zr3G', 'hahaha@gmail.com', '088182381', 27, 2, 'pakam', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1559627942, 1559627892, '2019-07-15 14:30:36', '0000-00-00', 18),
-(35, 'telor mi', 'telor', '$2y$10$yJtfGT2BQKlLMMHLier3T.BYZ4XlonTaRrL2wyQF3JD9UeWW86uQS', 'telor@gmail.com', '79327327', 6, 152, 'Jakpus', 2, 1, 'telor1563018023', '.png', '192.168.43.180', NULL, NULL, NULL, NULL, NULL, 1563773384, 1562084640, '2019-07-22 12:29:44', '1953-06-30', 66),
+(35, 'telor mi', 'telor', '$2y$10$yJtfGT2BQKlLMMHLier3T.BYZ4XlonTaRrL2wyQF3JD9UeWW86uQS', 'telor@gmail.com', '79327327', 6, 152, 'Jakpus', 2, 1, '', '', '192.168.43.180', NULL, NULL, NULL, NULL, NULL, 1563773384, 1562084640, '2019-08-02 00:05:11', '1953-06-30', 66),
 (41, 'bapak ku', 'bapak', '$2y$10$2VCXIaOdBQa8KGPNo.OBbeb15WsJzr/JQJsRQbuuWrXq.LFyAhLm.', 'bapak@gmail.com', '08182727', 34, 112, 'pantai labu', 2, 1, 'bapak1563105714', '.jpg', '192.168.43.180', NULL, NULL, NULL, NULL, NULL, 1561907810, 1561795393, '2019-07-15 14:30:49', '1955-06-10', 24),
 (42, 'hendri', 'hendri', '$2y$10$UHTuMyqvrf4mm7Orkeqg3OCeorDilUWk/RtNRKcnxI1TCly.VgGRG', 'hendri@gmail.com', '088182381', 27, 2, 'pakam', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, 1562914466, 1559913572, '2019-07-15 14:30:54', '0000-00-00', 30),
 (47, 'hihihi', 'hihihi', '$2y$10$iG4gcilA2ZjNxy64PCHPQ.pQ/lrwMni2Z84nuzBDoOYPn4wqhGVDq', 'hihihi@gmail.com', '088182381', 27, 2, 'pakam', 2, 1, NULL, NULL, '::1', NULL, NULL, NULL, NULL, NULL, NULL, 1560946092, '2019-07-15 14:30:56', '0000-00-00', 20),
@@ -1672,6 +1720,14 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
+-- Indexes for table `komplain`
+--
+ALTER TABLE `komplain`
+  ADD PRIMARY KEY (`id_komplain`),
+  ADD KEY `FK_transde_id` (`transdet_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `kontak`
 --
 ALTER TABLE `kontak`
@@ -1701,6 +1757,13 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `penukaran_barang`
+--
+ALTER TABLE `penukaran_barang`
+  ADD PRIMARY KEY (`id_penukaran`),
+  ADD KEY `FK_komplain_id` (`komplain_id`);
 
 --
 -- Indexes for table `produk`
@@ -1737,7 +1800,7 @@ ALTER TABLE `provinsi`
 ALTER TABLE `rating`
   ADD PRIMARY KEY (`id_rating`),
   ADD KEY `FK_rating_produk` (`item_id`),
-  ADD KEY `FK_rating_user` (`id_users`);
+  ADD KEY `FK_rating_users` (`id_users`);
 
 --
 -- Indexes for table `recommendation`
@@ -1813,6 +1876,12 @@ ALTER TABLE `kategori`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `komplain`
+--
+ALTER TABLE `komplain`
+  MODIFY `id_komplain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `kontak`
 --
 ALTER TABLE `kontak`
@@ -1843,6 +1912,12 @@ ALTER TABLE `payments`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `penukaran_barang`
+--
+ALTER TABLE `penukaran_barang`
+  MODIFY `id_penukaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
@@ -1858,7 +1933,7 @@ ALTER TABLE `promo`
 -- AUTO_INCREMENT for table `promo_detail`
 --
 ALTER TABLE `promo_detail`
-  MODIFY `promo_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `promo_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `provinsi`
@@ -1870,7 +1945,7 @@ ALTER TABLE `provinsi`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_rating` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `recommendation`
@@ -1882,7 +1957,7 @@ ALTER TABLE `recommendation`
 -- AUTO_INCREMENT for table `slider`
 --
 ALTER TABLE `slider`
-  MODIFY `id_slider` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_slider` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `subkategori`
@@ -1894,13 +1969,13 @@ ALTER TABLE `subkategori`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id_trans` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transaksi_detail`
 --
 ALTER TABLE `transaksi_detail`
-  MODIFY `id_transdet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
+  MODIFY `id_transdet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1919,6 +1994,13 @@ ALTER TABLE `users_group`
 --
 
 --
+-- Ketidakleluasaan untuk tabel `komplain`
+--
+ALTER TABLE `komplain`
+  ADD CONSTRAINT `FK_transdet_id` FOREIGN KEY (`transdet_id`) REFERENCES `transaksi_detail` (`id_transdet`),
+  ADD CONSTRAINT `komplain_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
 -- Ketidakleluasaan untuk tabel `kota`
 --
 ALTER TABLE `kota`
@@ -1929,6 +2011,12 @@ ALTER TABLE `kota`
 --
 ALTER TABLE `login_attempts`
   ADD CONSTRAINT `FK_login_attempts_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `penukaran_barang`
+--
+ALTER TABLE `penukaran_barang`
+  ADD CONSTRAINT `FK_komplain_id` FOREIGN KEY (`komplain_id`) REFERENCES `komplain` (`id_komplain`);
 
 --
 -- Ketidakleluasaan untuk tabel `produk`
@@ -1944,6 +2032,13 @@ ALTER TABLE `promo_detail`
   ADD CONSTRAINT `fk_promo` FOREIGN KEY (`promo`) REFERENCES `promo` (`id_promo`),
   ADD CONSTRAINT `fk_trans` FOREIGN KEY (`trans`) REFERENCES `transaksi` (`id_trans`),
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `FK_rating_produk` FOREIGN KEY (`item_id`) REFERENCES `produk` (`id_produk`),
+  ADD CONSTRAINT `FK_rating_users` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `recommendation`
@@ -1983,7 +2078,7 @@ DELIMITER $$
 --
 -- Event
 --
-CREATE DEFINER=`root`@`localhost` EVENT `status_update` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-07-22 06:43:21' ON COMPLETION NOT PRESERVE ENABLE DO update transaksi set status=6 where status=1$$
+CREATE DEFINER=`root`@`localhost` EVENT `Status_update` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-07-25 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE transaksi set status = 6 where status = 1$$
 
 DELIMITER ;
 COMMIT;

@@ -14,15 +14,16 @@ header("Cache-Control: max-age=0");
       <td style="text-align: center; background: #ddd; width: 100px"><b>No.Urut</b></td>
       <td style="text-align: center; background: #ddd; width: 100px"><b>No. Transaksi</b></td>
       <td style="text-align: center; background: #ddd; width: 100px"><b>Oleh</b></td>
-      <td style="text-align: center; background: #ddd; width: 100px"><b>Status</b></td>
       <td style="text-align: center; background: #ddd; width: 100px"><b>Pengiriman</b></td>
       <td style="text-align: center; background: #ddd; width: 100px"><b>Resi</b></td>
       <td style="text-align: center; background: #ddd; width: 100px"><b>Tanggal</b></td>
+      <td style="text-align: center; background: #ddd; width: 100px"><b>Grand Total(Rp)</b></td>
     </tr>
   </thead>
   <tbody>
     <?php
     $no = 1;
+    $totall = 0;
     foreach ($get_all as $export)
     {
     ?>
@@ -30,11 +31,13 @@ header("Cache-Control: max-age=0");
       <td style="text-align: center;vertical-align: top"><?php echo $no++ ?></td>
       <td style="text-align: center;vertical-align: top"><?php echo $export->id_trans; ?></td>
       <td style="text-align: center;vertical-align: top"><?php echo $export->name; ?></td>
-      <td style="text-align: center;vertical-align: top"><?php echo $export->status; ?></td>
       <td style="text-align: center;vertical-align: top"><?php echo $export->kurir.' '.$export->service; ?></td>
       <td style="text-align: center;vertical-align: top"><?php echo $export->resi; ?></td>
       <td style="text-align: center;vertical-align: top"><?php echo $export->created; ?></td>
+      <td style="text-align: center;vertical-align: top"><?php echo number_format($export->subtotal); ?></td>
     </tr>
-    <?php } ?>
+    <?php $totall+=$export->subtotal; } ?>
+      <td style="text-align: center;vertical-align: top" colspan="6">Total</td>
+      <td style="text-align: center;vertical-align: top"><?php echo number_format($totall); ?></td>
   </tbody>
 </table>
