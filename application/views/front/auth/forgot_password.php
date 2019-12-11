@@ -30,7 +30,7 @@
 					}
 
 					$email = $_GET['email'];
-					$password_baru = getName(6);
+					$password_baru = getName(8);
 					$options = [
 					  'cost' => 10
 					];
